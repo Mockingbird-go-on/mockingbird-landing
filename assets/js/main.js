@@ -24,10 +24,10 @@
       answer: "Service — это абстракция, дающая стабильный адрес (ClusterIP) подгруппе подов. Ingress — слой L7 поверх: маршрутизация по HTTP-хосту и пути, TLS-терминация, всё через Ingress Controller…",
     },
     priv: {
-      desc: "STT, VAD и база — локально; в облако уходит только запрос к LLM",
-      question: "всё работает на моей машине",
-      live: "● GPU · без облака для STT",
-      answer: "Распознавание, VAD и база знаний выполняются локально — аудио не покидает машину. Наружу уходит только текстовый запрос к LLM, и его можно ограничить.",
+      desc: "Не видно при расшаривании экрана и стриминге",
+      question: "меня видно на демонстрации экрана?",
+      live: "● режим невидимка · скрыт",
+      answer: "Окно ассистента исключено из захвата: при шаринге экрана и стриминге его не видно ни в записи, ни у зрителей — подсказки остаются только на вашем мониторе.",
     },
   };
 
@@ -65,4 +65,44 @@
   TABS.forEach((t) => t.addEventListener("click", () => render(t.dataset.feature)));
 
   render("stt");
+
+  /* ---------- «губка наоборот»: замазано → открывается → «собесов» зачёркнуто ----------
+     1) марка (лого+Mockingbird) стоит справа, тэглайн под ней замазан
+     2) марка уезжает влево, открывая текст слева направо
+     3) пауза — красный маркер зачёркивает «собесов» */
+  const brand = document.querySelector(".brand");
+  const mark = document.querySelector(".brand__mark");
+  const tagline = document.querySelector(".brand__tagline");
+  const strike = document.querySelector(".strike");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (brand && mark && tagline && !reduceMotion) {
+    const start = () => {
+      const dist = tagline.offsetWidth + 6;
+      if (dist <= 6) return;
+      const EASE = "cubic-bezier(.62,.02,.22,1)";
+      const DUR = 1800; /* медленнее */
+      /* исходное состояние: замазано, лого отзеркален */
+      brand.style.setProperty("--wipe", dist + "px");
+      mark.style.transform = `translateX(${dist}px)`;
+      /* кадр отрисован — запускаем «открывание» */
+      setTimeout(() => {
+        const slide = mark.animate(
+          [{ transform: `translateX(${dist}px)` }, { transform: "translateX(0px)" }],
+          { duration: DUR, easing: EASE, fill: "forwards" }
+        );
+        tagline.animate(
+          [
+            { clipPath: `inset(0 0 0 ${dist}px)` },
+            { clipPath: "inset(0 0 0 0px)" },
+          ],
+          { duration: DUR, easing: EASE, fill: "forwards" }
+        );
+        /* марка доехала влево — лого меняется на нормальный */
+        slide.onfinish = () => mark.classList.add("is-arrived");
+        setTimeout(() => strike?.classList.add("is-struck"), DUR + 750);
+      }, 80);
+    };
+    (document.fonts?.ready || Promise.resolve()).then(() => setTimeout(start, 150));
+  }
 })();

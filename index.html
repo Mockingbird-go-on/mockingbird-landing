@@ -15,14 +15,18 @@
   <!-- ================= HEADER ================= -->
   <header class="header">
     <div class="brand">
-      <img class="brand__logo" src="assets/img/logo.png" alt="Mockingbird">
-      <span class="brand__name" id="brandName"><b>M</b>ockingbird</span>
-      <span class="brand__tagline">ассистент <s>собесов</s> <b>технических интервью</b></span>
+      <span class="brand__mark">
+        <img class="brand__logo brand__logo--mirror" src="assets/img/logo.png" alt="" aria-hidden="true">
+        <img class="brand__logo brand__logo--normal" src="assets/img/logo.png" alt="Mockingbird">
+        <span class="brand__name" id="brandName"><b>M</b>ockingbird</span>
+      </span>
+      <span class="brand__tagline">ассистент <span class="strike">собесов</span> <b>технических интервью</b></span>
+      <span class="brand__wipe" aria-hidden="true"></span>
     </div>
     <nav class="header__nav">
       <span class="pill pill--oss">open&nbsp;source</span>
       <span class="pill pill--gpu">● CUDA</span>
-      <span class="pill pill--version">v1.0.0.1</span>
+      <span class="pill pill--version">v1.0.1.0</span>
       <a class="pill pill--gh" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
   </header>
@@ -75,11 +79,14 @@
       <button class="feature" role="tab" aria-selected="false" data-feature="priv">
         <span class="feature__ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/>
+            <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/>
+            <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/>
+            <path d="m2 2 20 20"/>
           </svg>
         </span>
         <span class="feature__body">
-          <span class="feature__name">Локально и приватно</span>
+          <span class="feature__name">Режим Невидимка</span>
           <span class="feature__desc" data-text-priv></span>
         </span>
       </button>
@@ -156,7 +163,7 @@
         <span class="spot spot--stt"    data-spot="stt"    title="Вопрос интервьюера"></span>
         <span class="spot spot--kb"     data-spot="kb"     title="База знаний / резюме"></span>
         <span class="spot spot--llm"    data-spot="llm"    title="Ответ ИИ"></span>
-        <span class="spot spot--priv"   data-spot="priv"   title="Всё локально"></span>
+        <span class="spot spot--priv"   data-spot="priv"   title="Невидимка"></span>
       </div>
       </div>
       </div>
@@ -183,7 +190,10 @@
         <li class="metric"><b>3</b><span>вкладки: интервью · резюме · лог</span></li>
       </ul>
 
-      <a class="cta" href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">скачать ↓</a>
+      <div class="cta-row">
+        <a class="cta" href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">скачать ↓</a>
+        <a class="cta cta--tg" href="https://t.me/MOCKINGBird_release" target="_blank" rel="noopener">telegram ↗</a>
+      </div>
     </aside>
 
   </main>
@@ -195,6 +205,8 @@
       <span class="footer__chip">faster-whisper</span>
       <span class="footer__chip">silero-vad</span>
       <span class="footer__chip">pypdf</span>
+      <span class="footer__chip">adaptive&nbsp;VAD</span>
+      <span class="footer__chip">single-flight&nbsp;LLM</span>
     </span>
     <span class="footer__copy">© 2026 mockingbird</span>
   </footer>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockingbird — STT-ассистент для технических интервью</title>
+<meta name="description" content="Mockingbird — десктопный ассистент для интервью: распознавание речи на faster-whisper, база знаний и ответы LLM в реальном времени.">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- красный шов через весь экран -->
+  <div class="seam" aria-hidden="true"></div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="brand">
+      <img class="brand__logo" src="assets/img/logo.png" alt="Mockingbird">
+      <span class="brand__name" id="brandName" data-text="Mockingbird">Mockingbird</span>
+      <span class="brand__tagline">ассистент <s>скучных</s> <b>технических интервью</b></span>
+    </div>
+    <nav class="header__nav">
+      <span class="pill pill--gpu">● CUDA</span>
+      <span class="pill pill--version">v1.0.0</span>
+      <a class="pill pill--gh" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN GRID ================= -->
+  <main class="grid">
+
+    <!-- ===== LEFT: feature tabs ===== -->
+    <aside class="col col--left" role="tablist" aria-label="Возможности">
+      <h2 class="col__title">Что внутри</h2>
+
+      <button class="feature is-active" role="tab" aria-selected="true" data-feature="stt">
+        <span class="feature__ico">🎙️</span>
+        <span class="feature__body">
+          <span class="feature__name">Распознавание речи</span>
+          <span class="feature__desc" data-text-stt></span>
+        </span>
+      </button>
+
+      <button class="feature" role="tab" aria-selected="false" data-feature="kb">
+        <span class="feature__ico">📚</span>
+        <span class="feature__body">
+          <span class="feature__name">База знаний</span>
+          <span class="feature__desc" data-text-kb></span>
+        </span>
+      </button>
+
+      <button class="feature" role="tab" aria-selected="false" data-feature="llm">
+        <span class="feature__ico">🧠</span>
+        <span class="feature__body">
+          <span class="feature__name">Ответы LLM</span>
+          <span class="feature__desc" data-text-llm></span>
+        </span>
+      </button>
+
+      <button class="feature" role="tab" aria-selected="false" data-feature="priv">
+        <span class="feature__ico">🔒</span>
+        <span class="feature__body">
+          <span class="feature__name">Локально и приватно</span>
+          <span class="feature__desc" data-text-priv></span>
+        </span>
+      </button>
+    </aside>
+
+    <!-- ===== CENTER: HTML-реплика окна приложения (по theme.py/interview_panel.py) ===== -->
+    <section class="hero" aria-label="Окно приложения">
+      <div class="hero__frame">
+
+        <!-- toolbar: как _build_toolbar() main_window.py -->
+        <div class="app__toolbar">
+          <button class="qbtn qbtn--primary" disabled title="Старт"><img class="ico" src="assets/img/play.svg" alt=""></button>
+          <button class="qbtn" title="Стоп"><img class="ico ico--err" src="assets/img/square.svg" alt=""></button>
+          <button class="qbtn" title="Мьют"><img class="ico" src="assets/img/volume-2.svg" alt=""></button>
+          <span class="app__activity" aria-hidden="true"><i></i></span>
+          <span class="app__timer" id="appTimer">00:00</span>
+          <span class="flex-spacer"></span>
+          <span class="qbadge qbadge--cpu">GPU</span>
+          <span class="qbadge qbadge--status">running</span>
+          <button class="qbtn" title="Настройки"><img class="ico" src="assets/img/settings-2.svg" alt=""></button>
+          <span class="app__logo">
+            <img src="assets/img/logo.png" alt="">
+            <span class="app__logo-text"><b>M</b>ockingbird</span>
+          </span>
+        </div>
+
+        <!-- tabs + pane: как QTabWidget::pane / interview_panel.py -->
+        <div class="app__tabs">
+          <div class="app__tabbar">
+            <span class="app__tab is-selected">Интервью</span>
+            <span class="app__tab">Резюме</span>
+            <span class="app__tab">Лог</span>
+          </div>
+
+          <div class="app__pane">
+            <!-- header: вопрос + context icon + live -->
+            <div class="app__header">
+              <div class="app__qrow">
+                <span class="app__question" id="appQuestion" data-typing>Скажите что-нибудь…</span>
+                <span class="app__ctx" title="Контекст сессии">ⓘ</span>
+              </div>
+              <div class="app__live" id="appLive">● слушать…</div>
+            </div>
+
+            <!-- splitter: Ответ ИИ | История (4:1) -->
+            <div class="app__split">
+              <div class="app__answer">
+                <div class="app__answer-head">
+                  <span class="app__answer-title">Ответ ИИ</span>
+                  <button class="app__regen" title="Перегенерировать ответ">⟳</button>
+                </div>
+                <div class="app__browser" id="appAnswer">
+                  <p class="dim">Ответ появится здесь…</p>
+                </div>
+              </div>
+              <div class="app__history">
+                <span class="app__answer-title">История</span>
+                <div class="app__hist-items">
+                  <div class="app__hist-q">расскажи про CI/CD</div>
+                  <div class="app__hist-q">zabbix vs prometheus</div>
+                  <div class="app__hist-q">как устроен docker network</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- spot-маркеры (подсвечивают зоны при выборе фичи) -->
+        <span class="spot spot--stt"    data-spot="stt"    title="Вопрос интервьюера"></span>
+        <span class="spot spot--kb"     data-spot="kb"     title="База знаний / резюме"></span>
+        <span class="spot spot--llm"    data-spot="llm"    title="Ответ ИИ"></span>
+        <span class="spot spot--priv"   data-spot="priv"   title="Всё локально"></span>
+      </div>
+    </section>
+
+    <!-- ===== RIGHT: терминальный пайплайн + метрики ===== -->
+    <aside class="col col--right">
+      <h2 class="col__title">Как это работает</h2>
+
+      <div class="terminal" aria-label="Пайплайн обработки">
+        <span class="terminal__prompt">$</span> <span class="terminal__cmd">voice</span>
+        <span class="terminal__arrow"> → </span><span class="terminal__stage" data-node="0">vad</span>
+        <span class="terminal__arrow"> → </span><span class="terminal__stage" data-node="1">whisper</span>
+        <span class="terminal__arrow"> → </span><span class="terminal__stage" data-node="2">kb</span>
+        <span class="terminal__arrow"> → </span><span class="terminal__stage" data-node="3">llm</span>
+        <span class="terminal__arrow"> → </span><span class="terminal__stage" data-node="4">answer</span>
+        <span class="terminal__status">&nbsp;&nbsp;[ok 5.6s]</span><br>
+        <span class="terminal__prompt">$</span> <span class="terminal__cursor"></span>
+        <span class="terminal__sweep" aria-hidden="true"></span>
+      </div>
+
+      <ul class="metrics">
+        <li class="metric"><b>~5–6 с</b><span>от конца вопроса до ответа</span></li>
+        <li class="metric"><b>v3-turbo</b><span>faster-whisper, CUDA</span></li>
+        <li class="metric"><b>3</b><span>вкладки: интервью · резюме · лог</span></li>
+      </ul>
+
+      <a class="cta" href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">скачать ↓</a>
+    </aside>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <span class="footer__stack">pyside6 · faster-whisper · silero-vad · pypdf</span>
+    <span class="footer__copy">© 2026 mockingbird // один экран — без прокрутки</span>
+  </footer>
+
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

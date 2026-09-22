@@ -1,0 +1,568 @@
+/* ================================================================
+   Mockingbird landing — corporate punk
+   Палитра: ui/theme.py DARK_THEME. Сетка 8px. Красного ≤7% площади.
+   ================================================================ */
+
+@import url("../fonts/fonts.css");
+
+/* фирменный шрифт лого приложения — assets/fonts/Kholodos.otf */
+@font-face {
+  font-family: "Kholodos";
+  src: url("Kholodos.otf") format("opentype");
+  font-display: swap;
+}
+
+:root {
+  /* палитра из src/mockingbird/ui/theme.py (DARK_THEME) */
+  --bg: #141619;            /* bg */
+  --panel: #1a1d21;         /* surface */
+  --panel-2: #16181c;       /* surface_alt */
+  --card-hover: #1e2227;
+  --line: #2b2f34;          /* border */
+  --text: #d1d9e1;          /* text */
+  --muted: #8a99a8;         /* text_secondary */
+  --accent: #ff2a1a;        /* accent (лого Mockingbird) */
+  --accent-hover: #e02518;
+  --ok: #3ddc84;            /* status_running */
+  --warn: #ffb020;          /* status_muted */
+  --idle: #5c6670;          /* status_idle */
+  --grid: 8px;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* никакого скролла */
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01";
+  background:
+    /* инженерная миллиметровка — очень тонкая, почти незаметная */
+    repeating-linear-gradient(0deg,  transparent 0 31px, rgba(255,255,255,.012) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255,255,255,.012) 31px 32px),
+    var(--bg);
+  color: var(--text);
+}
+
+.stage {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: calc(var(--grid)); /* 8px базовая сетка */
+  padding: calc(var(--grid)*2) calc(var(--grid)*3);
+  position: relative;
+}
+
+/* ================================================================
+   КРАСНЫЙ ШОВ — одна линия через весь экран (за контентом)
+   ================================================================ */
+.seam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.seam::before {
+  content: "";
+  position: absolute;
+  top: -5%;
+  left: -8%;
+  width: 116%;
+  height: 2px;
+  background: var(--accent);
+  transform: rotate(-1.1deg);
+  opacity: .8;
+  box-shadow: 0 1px 12px rgba(255,42,26,.35);
+}
+.seam::after {
+  content: "";
+  position: absolute;
+  bottom: 12%;
+  left: -8%;
+  width: 116%;
+  height: 1px;
+  background: var(--accent);
+  transform: rotate(.6deg);
+  opacity: .35;
+}
+.stage > * { position: relative; z-index: 1; }
+
+/* ================================================================
+   HEADER
+   ================================================================ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--grid)*2);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand__logo { height: clamp(22px, 3.2vh, 32px); width: auto; }
+
+/* глитч-заголовок: два кадра RGB-расщепления раз в ~10с */
+.brand__name {
+  font-size: clamp(19px, 3vh, 27px);
+  font-weight: 700;
+  letter-spacing: .5px;
+  position: relative;
+}
+.brand__name.glitch::before,
+.brand__name.glitch::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 55% 0);
+}
+.brand__name.glitch::before { color: var(--accent); transform: translate(-2px, -1px); animation: glitch-a .3s steps(2) 1; }
+.brand__name.glitch::after  { color: var(--ok);     transform: translate(2px, 1px);   animation: glitch-b .3s steps(2) 1; clip-path: inset(55% 0 0 0); }
+@keyframes glitch-a { 0%{transform:translate(-4px,-2px)} 50%{transform:translate(2px,1px)} 100%{transform:translate(-2px,-1px)} }
+@keyframes glitch-b { 0%{transform:translate(4px,2px)}   50%{transform:translate(-2px,-1px)} 100%{transform:translate(2px,1px)} }
+
+/* tagline: моно, со страйком «скучных» */
+.brand__tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.6vh, 13px);
+  color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.brand__tagline s { text-decoration-color: var(--accent); text-decoration-thickness: 2px; color: var(--idle); }
+.brand__tagline b { color: var(--text); font-weight: 400; }
+
+.header__nav { display: flex; gap: 8px; }
+.pill {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.4vh, 12px);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 0;                 /* резкие углы — «бунт» */
+  padding: 4px 10px;
+  background: var(--panel);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pill--gh { color: var(--text); }
+.pill--gh:hover { border-color: var(--accent); color: var(--accent); }
+.pill--version { color: var(--accent); border-color: #5c2220; }
+.pill--gpu { color: var(--ok); }
+
+/* ================================================================
+   MAIN GRID
+   ================================================================ */
+.grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(215px, 1fr) minmax(0, 2.6fr) minmax(215px, 1fr);
+  gap: calc(var(--grid)*2);
+}
+
+.col { display: flex; flex-direction: column; gap: var(--grid); min-height: 0; }
+
+/* заголовки секций: красный квадрат-буллет, CAPS,Inter 600 */
+.col__title {
+  font-size: clamp(10px, 1.5vh, 12px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.col__title::before {
+  content: "";
+  width: 7px; height: 7px;
+  background: var(--accent);
+  flex: none;
+}
+
+/* ---------- LEFT: features ---------- */
+.feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--grid);       /* 8px — как QSS приложения */
+  padding: calc(var(--grid)*1.5) calc(var(--grid)*2);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color .15s, background .15s, transform .12s;
+  flex: 1;
+}
+.feature:hover { border-color: #3a4048; background: var(--card-hover); transform: translateX(3px); }
+.feature.is-active {
+  border-color: var(--accent);
+  box-shadow: 3px 3px 0 0 rgba(255,42,26,.35); /* офсет-тень */
+}
+.feature__ico { font-size: clamp(15px, 2.2vh, 20px); line-height: 1.2; }
+.feature__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.feature__name { font-weight: 600; font-size: clamp(12px, 1.8vh, 14px); }
+.feature__desc {
+  font-family: var(--font-mono);
+  font-size: clamp(9.5px, 1.4vh, 11.5px);
+  line-height: 1.5;
+  color: var(--muted);
+  min-height: 3em;
+}
+
+/* ---------- CENTER: HTML-реплика окна приложения ---------- */
+/* Значения скопированы из build_qss() ui/theme.py и widgets.py */
+
+.hero { min-width: 0; min-height: 0; display: grid; place-items: center; }
+
+.hero__frame {
+  width: min(100%, calc((100vh - 210px) * 1.55));
+  aspect-ratio: 16 / 10;
+  background: var(--bg);               /* QMainWindow */
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 10px 10px 0 0 var(--accent); /* билборд-тень лендинга */
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+  padding: 6px;                        /* layout.setContentsMargins(6,6,6,6) */
+  position: relative;
+  overflow: hidden;
+}
+
+.flex-spacer { flex: 1; }
+
+/* --- toolbar: #toolbar QSS --- */
+.app__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20, 22, 25, 0.82);  /* header_bg */
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 6px 8px;
+}
+
+.qbtn {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 32px; height: 26px;
+  background: rgba(26, 29, 33, 0.55);  /* card */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: default;
+  transition: background .15s, border-color .15s;
+}
+.qbtn:hover { background: var(--card-hover); border-color: var(--accent); }
+.qbtn--primary { background: var(--accent); border-color: var(--accent); }
+.qbtn--primary:hover { background: var(--accent-hover); }
+.qbtn:disabled { opacity: .45; cursor: default; }
+
+.ico { width: 16px; height: 16px; }    /* 18x18 Qt icon → визуально 16 */
+/* currentColor → белый: инвертируем и красим */
+.qbtn .ico { filter: brightness(0) invert(1); }
+.qbtn--primary .ico { filter: brightness(0) invert(1); }
+.ico--err { filter: none; }
+/* красный stop: перекраска через drop-shadow не нужна — оставим белым как в Qt (LIGHT) */
+
+/* ActivityBar: полоска-термометр 12px */
+.app__activity {
+  width: 72px; height: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.app__activity i {
+  position: absolute; inset: 0 auto 0 0;
+  width: 30%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 60%, #ff5148 100%);
+  animation: vu 2.2s ease-in-out infinite;
+}
+@keyframes vu { 0%,100% { width: 18%; } 35% { width: 55%; } 60% { width: 30%; } }
+
+.app__timer { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--muted); margin-left: 4px; }
+
+/* StatusPill / DeviceBadge */
+.qbadge {
+  font-size: 11px; font-weight: 700;
+  background: rgba(26, 29, 33, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.qbadge--cpu { color: var(--ok); }      /* device_gpu #3DDC84 */
+.qbadge--status { color: var(--ok); }   /* running */
+
+/* LogoBadge: капсула 34px, шрифт Kholodos */
+.app__logo {
+  display: inline-flex; align-items: center; gap: 2px;
+  background: rgba(26, 29, 33, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  padding: 4px 14px 4px 10px;
+}
+.app__logo img { height: 22px; width: auto; }
+.app__logo-text {
+  font-family: "Kholodos", var(--font-sans);
+  font-size: 15px;
+}
+.app__logo-text b { color: var(--accent); font-weight: 400; }
+
+/* --- вкладки: QTabBar::tab --- */
+.app__tabs { min-height: 0; display: grid; grid-template-rows: auto 1fr; }
+.app__tabbar { display: flex; gap: 4px; padding-left: 2px; }
+.app__tab {
+  font-weight: 600;
+  font-size: clamp(11px, 1.6vh, 13px);
+  color: var(--text);
+  background: rgba(26, 29, 33, 0.55);
+  border: 1px solid var(--line);
+  border-bottom: 2px solid transparent;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 18px;
+}
+.app__tab:hover { color: var(--accent); border-color: var(--accent); }
+.app__tab.is-selected {
+  background: var(--panel);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* QTabWidget::pane */
+.app__pane {
+  min-height: 0;
+  background: rgba(26, 29, 33, 0.55);   /* card */
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+}
+
+/* header: вопрос + live */
+.app__header { display: flex; flex-direction: column; gap: 4px; }
+.app__qrow { display: flex; align-items: center; gap: 8px; }
+.app__question {
+  font-size: clamp(13px, 2vh, 16px);
+  color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.app__question.is-placeholder { color: var(--muted); }
+.app__ctx { color: var(--muted); font-size: 13px; cursor: help; }
+.app__live {
+  font-size: clamp(10px, 1.5vh, 12px);
+  color: var(--text);
+  visibility: hidden;
+}
+.app__live.is-on { visibility: visible; }
+.app__live::before { content: "● "; color: var(--accent); }
+
+/* splitter: Ответ ИИ (4) | История (1) */
+.app__split {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 4fr 1px 1.1fr;
+  gap: 6px;
+}
+.app__split::before { content: ""; background: var(--line); } /* QSplitter::handle */
+
+/* _AnswerPane */
+.app__answer { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.app__answer-head { display: flex; align-items: center; gap: 8px; }
+.app__answer-head .app__answer-title { flex: 1; }
+.app__answer-title { font-weight: 700; font-size: clamp(11px, 1.6vh, 13px); color: var(--text); }
+.app__regen {
+  width: 28px; height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(26, 29, 33, 0.55);
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+.app__regen:hover { border-color: var(--accent); background: var(--card-hover); color: var(--accent); }
+
+/* QTextBrowser */
+.app__browser {
+  flex: 1; min-height: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: clamp(11px, 1.7vh, 13.5px);
+  line-height: 1.55;
+  color: var(--text);
+  overflow: hidden;
+}
+.app__browser .dim { color: var(--muted); }
+.app__browser .caret { display: inline-block; width: .55em; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: caret 1s steps(1) infinite; }
+
+/* HistorySidebar */
+.app__history {
+  min-width: 0;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.app__hist-items {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  overflow: hidden;
+}
+.app__hist-q {
+  font-size: clamp(10px, 1.5vh, 12px);
+  color: var(--text);
+  background: rgba(26, 29, 33, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: pointer;
+}
+.app__hist-q:hover { background: var(--card-hover); border-color: var(--accent); }
+
+/* spot-маркеры — координаты под новую структуру */
+.spot {
+  position: absolute;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity .25s, transform .25s;
+  pointer-events: none;
+  z-index: 3;
+}
+.spot.is-on { opacity: 1; transform: scale(1); animation: ping 1.6s ease-out infinite; }
+@keyframes ping {
+  0%   { box-shadow: 0 0 0 0 rgba(255,42,26,.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(255,42,26,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,42,26,0); }
+}
+.spot::after {
+  content: attr(title);
+  position: absolute; top: 38px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text); background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; white-space: nowrap;
+  z-index: 4;
+}
+.spot--stt  { top: 26%; left: 14%; }
+.spot--kb   { top: 47%; right: 4%; }
+.spot--llm  { top: 62%; left: 38%; }
+.spot--priv { bottom: 8%; left: 50%; }
+
+/* ---------- RIGHT: терминальный пайплайн ---------- */
+.terminal {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--grid);
+  padding: calc(var(--grid)*1.5) calc(var(--grid)*1.5);
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.5vh, 12px);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.terminal__prompt { color: var(--accent); }
+.terminal__cmd { color: var(--text); }
+.terminal__arrow { color: var(--idle); }
+.terminal__stage { position: relative; z-index: 1; transition: color .2s; }
+.terminal__stage.is-hot { color: var(--ok); text-shadow: 0 0 8px rgba(61,220,132,.4); }
+.terminal__status { color: var(--ok); }
+.terminal__cursor {
+  display: inline-block;
+  width: .6em; height: 1.05em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: caret 1s steps(1) infinite;
+}
+/* «импульс» по строке пайплайна */
+.terminal__sweep {
+  position: absolute;
+  left: 0; bottom: 2px;
+  height: 1px;
+  width: 2px;
+  background: var(--accent);
+  animation: sweep 3.2s linear infinite;
+}
+@keyframes sweep { 0% { left: 6%; width: 0; } 50% { width: 24%; } 100% { left: 92%; width: 0; } }
+
+.metrics { list-style: none; display: flex; flex-direction: column; gap: var(--grid); flex: 1; }
+.metric {
+  display: flex; align-items: baseline; gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--grid);
+  padding: calc(var(--grid)*1.2) calc(var(--grid)*1.75);
+  flex: 1;
+}
+.metric b { font-family: var(--font-mono); font-size: clamp(13px, 2vh, 16px); font-weight: 700; color: var(--accent); white-space: nowrap; }
+.metric span { font-size: clamp(10px, 1.4vh, 12px); color: var(--muted); }
+
+/* CTA: светлая, hover — «взрыв» (сдвиг + красная офсет-тень) */
+.cta {
+  display: block;
+  text-align: center;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(12px, 1.8vh, 14px);
+  border-radius: 0;                 /* резкие углы */
+  padding: calc(var(--grid)*1.5);
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.cta:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 5px 5px 0 0 var(--accent);
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-family: var(--font-mono);
+  font-size: clamp(9.5px, 1.35vh, 11.5px);
+  color: var(--muted);
+}
+.footer__copy { text-align: right; }
+
+/* ================================================================
+   RESPONSIVE (деградация без скролла)
+   ================================================================ */
+@media (max-width: 1020px) {
+  .grid { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+  .col--left { flex-direction: row; overflow: hidden; }
+  .feature { min-width: 0; }
+  .feature__desc { display: none; }
+  .col--right { flex-direction: row; align-items: stretch; }
+  .metrics { flex-direction: row; flex: 1; }
+  .terminal { flex: 2; }
+  .hero__frame { width: min(100%, calc((100vh - 440px) * 1.6)); box-shadow: 6px 6px 0 0 var(--accent); }
+}
+
+@media (max-width: 640px) {
+  .col--left { flex-wrap: wrap; }
+  .spot::after { display: none; }
+  .footer__copy { display: none; }
+  .seam { display: none; }
+  .brand__tagline { display: none; }
+}
+
+/* ================================================================
+   A11Y
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

@@ -196,8 +196,8 @@ body::after {
   clip-path: var(--torn-bottom);
 }
 
-.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.brand__logo { height: clamp(24px, 3.4vh, 34px); width: auto; }
+.brand { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.brand__logo { height: clamp(32px, 4.6vh, 46px); width: auto; }
 
 .brand__name {
   font-family: var(--font-serif);

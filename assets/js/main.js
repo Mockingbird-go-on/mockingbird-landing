@@ -1,10 +1,9 @@
-// Mockingbird landing — табы фич, живая реплика окна, терминал, глитч
+// Mockingbird landing — статичный скриншот-макет (Web 2.0).
+// Никакой анимации: контент фиксирован. Клик по фиче лишь меняет
+// состояние без переходов, чтобы посмотреть варианты.
 (() => {
   "use strict";
 
-  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- сценарии: как в реальном приложении ---------- */
   const SCENES = {
     stt: {
       desc: "faster-whisper large-v3-turbo, adaptive VAD, фонетическая коррекция терминов",
@@ -37,38 +36,14 @@
   const qEl = document.getElementById("appQuestion");
   const liveEl = document.getElementById("appLive");
   const ansEl = document.getElementById("appAnswer");
+  const descMap = {
+    stt: "[data-text-stt]",
+    kb: "[data-text-kb]",
+    llm: "[data-text-llm]",
+    priv: "[data-text-priv]",
+  };
 
-  /* ---------- typing ---------- */
-  let typingTimer = null;
-  function typeText(el, text, done) {
-    clearInterval(typingTimer);
-    el.textContent = "";
-    let i = 0;
-    typingTimer = setInterval(() => {
-      el.textContent = text.slice(0, ++i);
-      if (i >= text.length) { clearInterval(typingTimer); done?.(); }
-    }, 42);
-  }
-
-  /* ---------- «стрим» ответа по словам ---------- */
-  let streamTimer = null;
-  function streamAnswer(html) {
-    clearInterval(streamTimer);
-    ansEl.innerHTML = '<p class="dim">Ответ ИИ задерживается…</p>';
-    const words = html.split(" ");
-    let i = 0;
-    setTimeout(() => {
-      streamTimer = setInterval(() => {
-        i++;
-        ansEl.innerHTML = "<p>" + words.slice(0, i).join(" ") +
-          (i < words.length ? ' <span class="caret"></span>' : "") + "</p>";
-        if (i >= words.length) clearInterval(streamTimer);
-      }, 90);
-    }, 1200);
-  }
-
-  /* ---------- табы ---------- */
-  function activate(key) {
+  function render(key) {
     const data = SCENES[key];
     if (!data) return;
 
@@ -79,74 +54,15 @@
     });
     SPOTS.forEach((s) => s.classList.toggle("is-on", s.dataset.spot === key));
 
-    const map = { stt: "[data-text-stt]", kb: "[data-text-kb]", llm: "[data-text-llm]", priv: "[data-text-priv]" };
-    const descEl = document.querySelector(map[key]);
+    const descEl = document.querySelector(descMap[key]);
     if (descEl) descEl.textContent = data.desc;
 
+    qEl.textContent = data.question;
     liveEl.textContent = data.live;
-    liveEl.classList.add("is-on");
-
-    if (reduceMotion) {
-      qEl.textContent = data.question;
-      ansEl.innerHTML = "<p>" + data.answer + "</p>";
-      return;
-    }
-    typeText(qEl, data.question, () => streamAnswer(data.answer));
+    ansEl.innerHTML = "<p>" + data.answer + "</p>";
   }
 
-  TABS.forEach((t) => t.addEventListener("click", () => activate(t.dataset.feature)));
+  TABS.forEach((t) => t.addEventListener("click", () => render(t.dataset.feature)));
 
-  TABS.forEach((t, i) => {
-    t.addEventListener("keydown", (e) => {
-      let j = null;
-      if (e.key === "ArrowDown" || e.key === "ArrowRight") j = (i + 1) % TABS.length;
-      if (e.key === "ArrowUp" || e.key === "ArrowLeft") j = (i - 1 + TABS.length) % TABS.length;
-      if (j !== null) { e.preventDefault(); TABS[j].focus(); activate(TABS[j].dataset.feature); }
-    });
-  });
-
-  /* ---------- таймер сессии 00:00 ---------- */
-  const timerEl = document.getElementById("appTimer");
-  if (timerEl) {
-    let sec = 14 * 60 + 7; // выглядит «живой» сессией
-    setInterval(() => {
-      sec++;
-      timerEl.textContent =
-        String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0");
-    }, 1000);
-  }
-
-  /* ---------- терминал ---------- */
-  const STAGES = document.querySelectorAll(".terminal__stage");
-  if (STAGES.length && !reduceMotion) {
-    const CYCLE = 3200, PER = CYCLE / (STAGES.length + 1);
-    let t0 = performance.now();
-    (function tick(now) {
-      const k = Math.floor(((now - t0) % CYCLE) / PER);
-      STAGES.forEach((s, i) => s.classList.toggle("is-hot", i === k));
-      requestAnimationFrame(tick);
-    })(t0);
-  }
-
-  /* ---------- глитч заголовка ---------- */
-  const brand = document.getElementById("brandName");
-  if (brand && !reduceMotion) {
-    const glitchOnce = () => {
-      brand.classList.add("glitch");
-      setTimeout(() => brand.classList.remove("glitch"), 320);
-    };
-    setInterval(glitchOnce, 10000);
-    setTimeout(glitchOnce, 1800);
-  }
-
-  /* ---------- авто-ротация ---------- */
-  const keys = Object.keys(SCENES);
-  let idx = 0;
-  let auto = setInterval(() => activate(keys[++idx % keys.length]), 12000);
-  const stopAuto = () => { clearInterval(auto); auto = null; };
-  ["click", "keydown", "touchstart"].forEach((ev) =>
-    addEventListener(ev, stopAuto, { once: true, passive: true })
-  );
-
-  activate("stt");
+  render("stt");
 })();

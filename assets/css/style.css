@@ -338,6 +338,16 @@ body::after {
   text-transform: uppercase;
   transform: rotate(-2deg);
 }
+/* «бесплатно» — контурный штамп рядом с open source */
+.pill--free {
+  color: var(--accent);
+  border-color: var(--accent);
+  border-style: dashed;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transform: rotate(1.5deg);
+}
 
 /* ================================================================
    MAIN GRID
@@ -734,10 +744,30 @@ body::after {
 .metrics { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .metric {
   position: relative;
-  display: flex; align-items: baseline; gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
   filter: drop-shadow(4px 5px 0 rgba(0, 0, 0, .55)) drop-shadow(0 10px 14px rgba(0, 0, 0, .38));
   padding: calc(var(--grid)*1.25) calc(var(--grid)*1.75);
+}
+/* строка «цифра + подпись» на одной линии */
+.metric__row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 0 0 16px;   /* место под сноску */
+}
+.metric__row b { white-space: nowrap; }
+.metric sup { font-size: .55em; color: var(--accent); font-weight: 700; }
+/* сноска — прижата к нижнему краю карточки */
+.metric-footnote {
+  position: absolute;
+  left: calc(var(--grid)*1.75);
+  bottom: calc(var(--grid)*.9);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(10px, 1.4vh, 12px);
+  line-height: 1;
+  color: var(--ink-faint);
 }
 .metric::before {
   content: "";
@@ -842,6 +872,7 @@ body::after {
    ================================================================ */
 @media (max-width: 1020px) {
   .grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; }
+  .metric-footnote { display: none; }
   .col--left { flex-direction: row; overflow: hidden; transform: none; }
   .feature { min-width: 0; }
   .feature__desc { display: none; }

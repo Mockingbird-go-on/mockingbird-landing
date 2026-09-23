@@ -248,9 +248,8 @@ body::after {
 }
 .brand__mark.is-arrived .brand__logo--mirror { opacity: 0; }
 
-/* марка (лого + Mockingbird) — «губка»: непрозрачная бумага, что едет
-   вправо и замазывает собой тэглайн. Тэглайн синхронно подрезается слева
-   ровно под ведущим краем марки — текст исчезает, будто стёрт губкой. */
+/* марка (лого + Mockingbird) — едет влево, открывая тэглайн.
+   Фон прозрачный: текст под ней скрыт синхронной обрезкой clip-path. */
 .brand__mark {
   display: inline-flex;
   align-items: center;
@@ -258,17 +257,7 @@ body::after {
   flex: none;
   position: relative;
   z-index: 2;
-  padding: 6px 0;
-  margin: -6px 0;
-  background-color: var(--paper);
-  background-image:
-    radial-gradient(rgba(0, 0, 0, .05) .8px, transparent 1.1px),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, .02) 0 1px, transparent 1px 3px),
-    var(--grain-paper);
-  background-size: 3px 3px, auto, 150px 150px;
-  background-blend-mode: multiply, multiply, normal;
   will-change: transform;
-  transition: transform 1.15s cubic-bezier(.62, .02, .22, 1);
 }
 .brand__name {
   font-family: var(--font-serif);

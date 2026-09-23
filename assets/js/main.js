@@ -60,9 +60,26 @@
     qEl.textContent = data.question;
     liveEl.textContent = data.live;
     ansEl.innerHTML = "<p>" + data.answer + "</p>";
+    ansEl.setAttribute("aria-live", "polite");
   }
 
   TABS.forEach((t) => t.addEventListener("click", () => render(t.dataset.feature)));
+
+  /* стрелочная навигация по табам (role=tablist) */
+  TABS.forEach((t, i) => {
+    t.addEventListener("keydown", (e) => {
+      let j = null;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") j = (i + 1) % TABS.length;
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") j = (i - 1 + TABS.length) % TABS.length;
+      if (e.key === "Home") j = 0;
+      if (e.key === "End") j = TABS.length - 1;
+      if (j !== null) {
+        e.preventDefault();
+        TABS[j].focus();
+        render(TABS[j].dataset.feature);
+      }
+    });
+  });
 
   render("stt");
 

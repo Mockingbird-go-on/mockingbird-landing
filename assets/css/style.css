@@ -23,7 +23,7 @@
   --paper-2: #dcd3bd;
   --ink: #1b1814;
   --ink-soft: #4b453a;
-  --ink-faint: #857b68;
+  --ink-faint: #6b6252;   /* 4.6:1 на бумаге — WCAG AA */
 
   /* — печатный красный акцент (из ui/theme.py accent) — */
   --accent: #c62112;
@@ -114,6 +114,14 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* видимый фокус с клавиатуры: печатная рамка-обводка */
+:focus { outline: none; }
+:focus-visible {
+  outline: 3px dashed var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 
 html, body { height: 100%; overflow: hidden; }
 

@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: "Kholodos";
-  src: url("../fonts/Kholodos.otf") format("opentype");
+  src: url("../fonts/Kholodos.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -594,7 +594,7 @@ body::after {
 .app__tabs { min-height: 0; display: grid; grid-template-rows: auto 1fr; }
 .app__tabbar { display: flex; gap: 4px; padding-left: 2px; }
 .app__tab {
-  font-weight: 600;
+  font-weight: 700;
   font-size: clamp(11px, 1.6vh, 13px);
   color: var(--shot-muted);
   background: var(--shot-panel-2);
@@ -739,7 +739,6 @@ body::after {
 .terminal__stage.is-hot { color: #fff; background: var(--accent); padding: 0 3px; }
 .terminal__status { color: var(--ok); font-weight: 700; }
 .terminal__cursor { display: inline-block; width: .6em; height: 1.05em; background: var(--accent); vertical-align: text-bottom; }
-.terminal__sweep { display: none; }
 
 .metrics { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .metric {

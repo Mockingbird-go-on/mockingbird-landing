@@ -868,26 +868,110 @@ body::after {
 .footer__copy { text-align: right; }
 
 /* ================================================================
-   RESPONSIVE
+   MOBILE / TABLET — вертикальная версия со скроллом (≤1020px)
    ================================================================ */
 @media (max-width: 1020px) {
-  .grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; }
+  /* экран узкий: разрешаем вертикальную прокрутку, этапы идут колонкой */
+  html, body { height: auto; overflow: auto; }
   .metric-footnote { display: none; }
-  .col--left { flex-direction: row; overflow: hidden; transform: none; }
-  .feature { min-width: 0; }
-  .feature__desc { display: none; }
-  .col--right { flex-direction: row; align-items: stretch; transform: none; }
-  .metrics { flex-direction: row; flex: 1; }
-  .terminal { flex: 2; }
-  .hero { overflow: hidden; }
-  .shot { width: min(100%, calc((100vh - 470px) * 1.6)); }
+  .stage {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--grid)*2.5);
+    padding: calc(var(--grid)*1.5);
+  }
+
+  /* --- шапка: марка, под ней тэглайн, под ним штампики --- */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--grid)*1.5);
+    padding: calc(var(--grid)*1.5) calc(var(--grid)*2) calc(var(--grid)*3);
+    clip-path: var(--torn);
+    transform: none;
+  }
+  .header::before { clip-path: var(--torn); }
+  .brand { flex-wrap: wrap; row-gap: 2px; width: 100%; }
+  .brand__logo { height: clamp(30px, 7vw, 40px); }
+  .brand__name { font-size: clamp(24px, 7.5vw, 34px); }
+  .brand__tagline {
+    display: block;
+    flex-basis: 100%;
+    font-size: clamp(14px, 4.2vw, 18px);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  /* на мобильном губка не играет: текст просто открыт */
+  .brand__tagline { clip-path: none !important; }
+  .brand__mark { transform: none !important; }
+  .header__nav { flex-wrap: wrap; row-gap: 8px; }
+
+  /* --- сетка: одна колонка, всё вертикально --- */
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--grid)*2.5);
+  }
+  .col { gap: calc(var(--grid)*1.5); }
+
+  /* фичи: полные карточки с описанием */
+  .col--left { flex-direction: column; overflow: visible; }
+  .col--left .feature + .feature { margin-top: 0; }
+  .feature {
+    flex-direction: row;
+    transform: none !important;
+    margin: 0 !important;
+  }
+  .feature:nth-child(even) { transform: rotate(.5deg) !important; }
+  .feature:nth-child(odd) { transform: rotate(-.4deg) !important; }
+  .feature__desc { display: block; min-height: 0; font-size: clamp(11.5px, 3.4vw, 14px); }
+  .feature__name { font-size: clamp(15px, 4.5vw, 18px); }
+
+  /* центр: снимок приложения на всю ширину; интерфейс снимка уплотняем */
+  .hero { padding: calc(var(--grid)*1.5); transform: none; min-width: 0; }
+  .hero > .shot { width: 100% !important; min-width: 0; max-width: 100%; }
+  .hero__frame { font-size: 12px; }
+  .app__toolbar { flex-wrap: wrap; row-gap: 4px; }
+  .app__logo-text { display: none; }
+  /* история сворачивается — ответ важнее */
+  .app__split { grid-template-columns: 1fr; }
+  .app__split::before { display: none; }
+  .app__history { display: none; }
+  .app__qrow { flex-wrap: wrap; }
+  .app__question { white-space: normal; font-size: 13px; }
+  .app__answer-title, .app__tab { font-size: 11px; padding: 6px 12px; }
+  .spot, .tape { display: none; }
+
+  /* правая колонка: терминал и метрики столбиком */
+  .col--right { flex-direction: column; }
+  .col--right .metric + .metric { margin-top: 0; }
+  .metrics { flex-direction: column; }
+  .metric { transform: none !important; margin: 0 !important; }
+
+  /* CTA столбиком */
+  .cta-row { flex-direction: column; }
+  .cta { font-size: clamp(17px, 5vw, 21px); }
+
+  /* футер: чипы переносятся, копирайт ниже */
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--grid));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .footer__copy { display: block; text-align: left; }
+  .footer__stack { gap: 6px; }
 }
 
-@media (max-width: 640px) {
-  .col--left { flex-wrap: wrap; }
-  .spot::after { display: none; }
-  .footer__copy { display: none; }
-  .brand__tagline { display: none; }
+/* очень узкие экраны */
+@media (max-width: 380px) {
+  .brand__name { font-size: 22px; }
+  .feature__ico { width: 2em; height: 2em; }
+  .cta { padding: calc(var(--grid)); }
 }
 
 /* без анимации: текст сразу открыт, «собесов» зачёркнуто, лого нормальное */

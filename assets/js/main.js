@@ -75,8 +75,9 @@
   const tagline = document.querySelector(".brand__tagline");
   const strike = document.querySelector(".strike");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isMobile = matchMedia("(max-width: 1020px)").matches;
 
-  if (brand && mark && tagline && !reduceMotion) {
+  if (brand && mark && tagline && !reduceMotion && !isMobile) {
     const start = () => {
       const dist = tagline.offsetWidth + 6;
       if (dist <= 6) return;

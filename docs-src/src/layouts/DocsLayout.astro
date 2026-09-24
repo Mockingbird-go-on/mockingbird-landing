@@ -1,18 +1,58 @@
 ---
 import "../styles/docs.css";
-import { nav, isGroup } from "../nav";
+import { nav, isGroup, flatNav } from "../nav";
 
 export interface Props {
   title: string;
   description?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description } = Astro.props;
-const current = Astro.url.pathname.replace(/\/+$/, "") || "/docs";
+const { title, description, jsonLd } = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/docs";
+const canonical = new URL(pathname + "/", Astro.site).href;
+const ogImage = new URL("/assets/img/og.jpg", Astro.site).href;
+
 const isActive = (href: string) => {
   const norm = href.replace(/\/+$/, "") || "/docs";
-  return norm === current;
+  return norm === pathname;
 };
+
+/* хлебные крошки: Главная → Docs → раздел(ы) */
+const current = flatNav.find((item) => isActive(item.href));
+const crumbs: { name: string; url?: string }[] = [{ name: "Mockingbird", url: new URL("/", Astro.site).href }];
+if (current && current.href !== "/docs/") {
+  const segs = current.href.replace(/^\/docs\//, "").replace(/\/$/, "").split("/");
+  crumbs.push({ name: "Документация", url: new URL("/docs/", Astro.site).href });
+  // промежуточные разделы (например «Настройка») — только если есть группа
+  let acc = "/docs";
+  segs.forEach((seg, i) => {
+    acc += "/" + seg;
+    const isLast = i === segs.length - 1;
+    if (isLast) {
+      crumbs.push({ name: current.label });
+    } else {
+      const group = nav.find((g) => isGroup(g) && g.items.some((it) => it.href.startsWith(acc)));
+      crumbs.push({ name: group && isGroup(group) ? group.label : seg });
+    }
+  });
+} else {
+  crumbs.push({ name: "Документация", url: new URL("/docs/", Astro.site).href });
+}
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: crumbs.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: c.name,
+    ...(c.url ? { item: c.url } : {}),
+  })),
+};
+
+const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!DOCTYPE html>
@@ -22,9 +62,28 @@ const isActive = (href: string) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} — Mockingbird Docs</title>
   {description && <meta name="description" content={description} />}
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href={canonical} />
   <link rel="icon" type="image/png" href="/docs/img/favicon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Mockingbird Docs" />
+  <meta property="og:title" content={`${title} — Mockingbird Docs`} />
+  {description && <meta property="og:description" content={description} />}
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="ru_RU" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${title} — Mockingbird Docs`} />
+  {description && <meta name="twitter:description" content={description} />}
+  <meta name="twitter:image" content={ogImage} />
+
   <link rel="preload" href="/docs/fonts/Inter-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/docs/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 </head>
 <body>
   <header class="docs-header">

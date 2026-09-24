@@ -14,25 +14,37 @@ export type NavEntry = NavItem | NavGroup;
 
 export const nav: NavEntry[] = [
   { label: "Обзор", href: "/docs/" },
-  { label: "Установка", href: "/docs/install/", desc: "Требования, установка и первый запуск на Windows и Linux." },
+  {
+    label: "Установка",
+    href: "/docs/install/",
+    desc: "Скачивание и установка Mockingbird на Windows 10/11 и Linux, первый запуск.",
+  },
   {
     label: "Настройка",
-    desc: "Выбор модели, режимы работы и тонкая настройка под себя.",
+    desc: "Выбор модели распознавания речи, режимы работы и проверка.",
     items: [
       {
         label: "Выбор STT-модели",
         href: "/docs/setup/stt-model/",
-        desc: "На что обратить внимание при выборе модели распознавания речи.",
+        desc: "Как выбрать модель faster-whisper: точность, скорость, требования к GPU.",
       },
       {
         label: "Режимы работы",
         href: "/docs/setup/modes/",
-        desc: "Настройка источника вопросов и проверка работы.",
+        desc: "Источник вопросов (системный звук, микрофон), проверка работы и режим Невидимка.",
       },
     ],
   },
-  { label: "База знаний", href: "/docs/knowledge-base/", desc: "Как загрузить PDF-резюме и управлять контекстом ответов." },
-  { label: "FAQ", href: "/docs/faq/", desc: "Ответы на частые вопросы." },
+  {
+    label: "База знаний",
+    href: "/docs/knowledge-base/",
+    desc: "Как загрузить PDF-резюме и управлять контекстом ответов LLM.",
+  },
+  {
+    label: "FAQ",
+    href: "/docs/faq/",
+    desc: "Частые вопросы: приватность, CUDA, режим Невидимка, цена.",
+  },
 ];
 
 export const isGroup = (entry: NavEntry): entry is NavGroup => "items" in entry;

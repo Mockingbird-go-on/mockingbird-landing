@@ -1,15 +1,58 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
+
+const howToLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Как установить Mockingbird",
+  description: "Установка десктопного ассистента технических интервью Mockingbird на Windows и Linux.",
+  totalTime: "PT10M",
+  tool: [{ "@type": "HowToTool", name: "Компьютер с Windows 10/11 или Linux x86_64" }],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Скачать сборку",
+      text: "Откройте страницу релизов на GitHub и скачайте установщик для своей ОС: Mockingbird-setup.exe для Windows или Mockingbird.AppImage для Linux.",
+      url: "https://mocking.ru/docs/install/#windows",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Установить",
+      text: "На Windows запустите установщик и пройдите мастер. На Linux сделайте AppImage исполняемым и запустите его.",
+      url: "https://mocking.ru/docs/install/#linux",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Запустить и проверить устройство",
+      text: "Запустите приложение и проверьте индикатор в тулбаре: GPU при наличии CUDA, иначе CPU.",
+      url: "https://mocking.ru/docs/install/#первый-запуск",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Загрузить резюме",
+      text: "На вкладке «Резюме» загрузите PDF-резюме — оно станет базой знаний для ответов.",
+      url: "https://mocking.ru/docs/knowledge-base/",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Начать работу",
+      text: "Нажмите «Старт» и говорите — черновик появится на вкладке «Интервью».",
+      url: "https://mocking.ru/docs/setup/modes/",
+    },
+  ],
+};
 ---
 
 <DocsLayout
   title="Установка"
-  description="Как установить и запустить Mockingbird на Windows и Linux."
+  description="Как скачать, установить и запустить Mockingbird на Windows и Linux (x86_64)."
+  jsonLd={howToLd}
 >
   <h1>Установка</h1>
   <p>
-    Mockingbird — десктопное приложение на PySide6. Скачайте сборку для своей ОС
-    со <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">страницы релизов</a>.
+    Mockingbird — десктопное приложение на PySide6 для Windows 10/11 и Linux (x86_64).
+    Скачайте сборку для своей ОС со
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">страницы релизов</a>.
   </p>
 
   <h2>Требования</h2>
@@ -19,7 +62,7 @@ import DocsLayout from "../layouts/DocsLayout.astro";
     <li>~2–4 ГБ на диске под модель <code>faster-whisper large-v3-turbo</code>.</li>
   </ul>
 
-  <h2>Windows</h2>
+  <h2 id="windows">Windows</h2>
   <ol>
     <li>Скачайте <code>Mockingbird-setup.exe</code> из последнего релиза.</li>
     <li>Запустите установщик и следуйте шагам мастера.</li>
@@ -30,7 +73,7 @@ import DocsLayout from "../layouts/DocsLayout.astro";
     будет работать, но медленнее.
   </p>
 
-  <h2>Linux</h2>
+  <h2 id="linux">Linux</h2>
   <ol>
     <li>Скачайте <code>Mockingbird.AppImage</code>.</li>
     <li>Сделайте файл исполняемым и запустите:</li>
@@ -49,5 +92,10 @@ import DocsLayout from "../layouts/DocsLayout.astro";
   <p>
     Приложение проверяет новые релизы при запуске. Вручную — на
     <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">странице релизов</a>.
+  </p>
+
+  <p>
+    Дальше: <a href="/docs/setup/stt-model/">выбор STT-модели</a> и
+    <a href="/docs/setup/modes/">режимы работы</a>.
   </p>
 </DocsLayout>

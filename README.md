@@ -1,13 +1,34 @@
 # mockingbird-landing
 
-Лендинг проекта **Mockingbird** — голосовой AI-ассистент для технических
-интервью: локальный STT (faster-whisper), база знаний из PDF-резюме,
-контекстный ответ LLM. Всё локально, кроме запроса к LLM.
+Лендинг проекта **Mockingbird** — офлайн-ассистент для технических интервью:
+локальный STT (faster-whisper), база знаний из PDF-резюме, ответы LLM в реальном
+времени. Всё локально, кроме запроса к LLM.
 
 - Сайт: **https://mocking.ru**
 - Репозиторий приложения: https://github.com/Mockingbird-go-on/mockingbird
 - Скачать: https://github.com/Mockingbird-go-on/mockingbird/releases
 
-Стек: чистый HTML/CSS/JS, без сборки — GitHub Pages отдаёт как есть.
+## Структура
 
-Локальный просмотр: `bash serve.sh` → http://localhost:8080
+- `index.html` + `assets/` — лендинг (чистый HTML/CSS/JS, без сборки).
+- `docs-src/` — исходники документации на Astro.
+- `docs/` — собранная документация (генерируется, не править руками).
+- `robots.txt`, `sitemap.xml`, `llms.txt` — SEO/AI-индексация.
+- `docs-src/SEO.md` — семантическое ядро и правила текстов.
+
+Локальный просмотр лендинга: `bash serve.sh` → http://localhost:8080
+
+## Документация
+
+Исходники — `docs-src/src/pages/*.astro`, навигация — `docs-src/src/nav.ts`,
+стили — `docs-src/src/styles/docs.css`.
+
+```bash
+cd docs-src
+npm install          # первый раз
+npm run dev          # превью docs на localhost:4321/docs/
+npm run build        # собрать в ../docs
+```
+
+При пуше изменений в `docs-src/**` GitHub Action **Build docs** сам собирает и
+коммитит `docs/`. Руками собирать нужно только для локальной проверки.

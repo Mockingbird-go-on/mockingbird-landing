@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 // Собираем доки в /docs репозитория, чтобы GitHub Pages отдавал их
 // по адресу https://mocking.ru/docs/
@@ -12,4 +13,5 @@ export default defineConfig({
   build: {
     assets: "_assets",
   },
+  integrations: [sitemap()],
 });

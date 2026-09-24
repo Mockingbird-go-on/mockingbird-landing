@@ -1,6 +1,6 @@
 ---
 import "../styles/docs.css";
-import { nav } from "../nav";
+import { nav, isGroup } from "../nav";
 
 export interface Props {
   title: string;
@@ -36,6 +36,7 @@ const isActive = (href: string) => {
     <nav class="docs-header__nav">
       <a class="docs-header__link" href="/">на главную ↗</a>
       <a class="docs-header__link" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="docs-header__cta" href="/docs/changelog/">changelog</a>
     </nav>
   </header>
 
@@ -43,11 +44,24 @@ const isActive = (href: string) => {
     <aside class="docs-nav">
       <span class="docs-nav__title">Содержание</span>
       <ul>
-        {nav.map((item) => (
-          <li>
-            <a href={item.href} class={isActive(item.href) ? "is-active" : ""}>{item.label}</a>
-          </li>
-        ))}
+        {nav.map((entry) =>
+          isGroup(entry) ? (
+            <li class="docs-nav__group">
+              <span class="docs-nav__group-title">{entry.label}</span>
+              <ul>
+                {entry.items.map((item) => (
+                  <li>
+                    <a href={item.href} class={isActive(item.href) ? "is-active" : ""}>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={entry.href} class={isActive(entry.href) ? "is-active" : ""}>{entry.label}</a>
+            </li>
+          )
+        )}
       </ul>
     </aside>
 

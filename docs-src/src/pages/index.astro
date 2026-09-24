@@ -1,13 +1,13 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import { nav } from "../nav";
+import { nav, isGroup } from "../nav";
 
-const cards = nav.filter((n) => n.href !== "/docs/");
+const entries = nav.filter((n) => !(!isGroup(n) && n.href === "/docs/"));
 ---
 
 <DocsLayout
   title="Документация"
-  description="Документация Mockingbird: установка, настройка базы знаний и ответы на частые вопросы."
+  description="Документация Mockingbird: установка, настройка, база знаний и ответы на частые вопросы."
 >
   <h1>Mockingbird docs</h1>
   <p>
@@ -17,18 +17,24 @@ const cards = nav.filter((n) => n.href !== "/docs/");
 
   <h2>Разделы</h2>
   <div class="docs-cards">
-    {cards.map((c) => (
-      <a class="docs-card" href={c.href}>
-        <h3>{c.label}</h3>
-        <p>{
-          c.label === "Установка"
-            ? "Требования, установка и первый запуск на Windows и Linux."
-            : c.label === "База знаний"
-              ? "Как загрузить PDF-резюме и управлять контекстом ответов."
-              : "Ответы на частые вопросы."
-        }</p>
-      </a>
-    ))}
+    {entries.map((entry) =>
+      isGroup(entry) ? (
+        <div class="docs-card docs-card--group">
+          <h3>{entry.label}</h3>
+          <p>{entry.desc}</p>
+          <ul class="docs-card__links">
+            {entry.items.map((item) => (
+              <li><a href={item.href}>{item.label} →</a></li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <a class="docs-card" href={entry.href}>
+          <h3>{entry.label}</h3>
+          <p>{entry.desc}</p>
+        </a>
+      )
+    )}
   </div>
 
   <blockquote>

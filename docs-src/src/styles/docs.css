@@ -183,6 +183,19 @@ body {
   border-bottom: 1px solid transparent;
 }
 .docs-header__link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+/* changelog — отдельная кнопка справа */
+.docs-header__cta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--accent);
+  border: 1.5px solid var(--accent-lo);
+  border-radius: 2px;
+  padding: 4px 12px;
+  transform: rotate(-2deg);
+}
+.docs-header__cta:hover { background: var(--ink); border-color: var(--ink); }
 
 /* ---------- каркас ---------- */
 .docs-shell {
@@ -240,6 +253,19 @@ body {
   border-left-color: var(--accent);
   font-weight: 700;
 }
+/* группа в сайдбаре: заголовок + вложенный список */
+.docs-nav__group-title {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-faint);
+  margin: 10px 0 4px;
+}
+.docs-nav__group > ul { gap: 4px; }
+.docs-nav__group a { padding-left: 14px; }
+.docs-nav__group a.is-active { font-weight: 700; }
 
 /* ---------- контент: бумажная вырезка ---------- */
 .docs-content {
@@ -322,6 +348,17 @@ body {
 .docs-content th { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
 .docs-content img { max-width: 100%; height: auto; border: 1px solid #000; box-shadow: 4px 5px 0 rgba(0, 0, 0, .5); }
 
+/* дата/пометка у версии в changelog */
+.changelog__date {
+  font-family: var(--font-mono);
+  font-size: .55em;
+  font-weight: 400;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  vertical-align: middle;
+}
+
 /* карточки на индексной странице */
 .docs-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 20px; }
 .docs-card {
@@ -337,6 +374,18 @@ body {
 .docs-card:hover { transform: translate(-3px, -3px); box-shadow: 4px 5px 0 rgba(0, 0, 0, .5); }
 .docs-card h3 { font-family: var(--font-serif); font-weight: 400; font-size: 20px; margin: 0 0 6px; }
 .docs-card p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+/* карточка-группа со списком вложенных статей */
+.docs-card--group { display: block; }
+.docs-card--group:hover { transform: none; box-shadow: none; }
+.docs-card__links { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.docs-card__links a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.docs-card__links a:hover { border-bottom-color: var(--accent); }
 
 /* ---------- футер ---------- */
 .docs-footer {

@@ -1,0 +1,31 @@
+---
+import DocsLayout from "../layouts/DocsLayout.astro";
+---
+
+<DocsLayout
+  title="Changelog"
+  description="История изменений Mockingbird по версиям."
+>
+  <h1>Changelog</h1>
+  <p>
+    История изменений приложения Mockingbird. Даты — по дате релиза, ссылки ведут
+    на соответствующий выпуск в GitHub.
+  </p>
+
+  <h2>v1.0.2.0 — <span class="changelog__date">первый публичный релиз</span></h2>
+  <ul>
+    <li>Первый публичный релиз Mockingbird для Windows и Linux.</li>
+    <li>Локальное распознавание речи на <code>faster-whisper</code> (<code>large-v3-turbo</code>), ускорение CUDA.</li>
+    <li>Adaptive VAD (Silero) — автоматическое определение речи.</li>
+    <li>База знаний: загрузка PDF-резюме, индексация и контекст для LLM.</li>
+    <li>Ответы LLM в реальном времени со стримингом.</li>
+    <li>Режим Невидимка: окно скрыто при шаринге экрана и стриминге.</li>
+    <li>Фонетическая коррекция технических терминов в живом черновике.</li>
+    <li>Вкладки <strong>Интервью</strong> / <strong>Резюме</strong> / <strong>Лог</strong>.</li>
+    <li>Поддержка Windows и Linux.</li>
+  </ul>
+
+  <p>
+    Скачать: <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">страница релизов</a>.
+  </p>
+</DocsLayout>

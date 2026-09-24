@@ -32,10 +32,6 @@
   };
 
   const TABS = document.querySelectorAll(".feature");
-  const SPOTS = document.querySelectorAll(".spot");
-  const qEl = document.getElementById("appQuestion");
-  const liveEl = document.getElementById("appLive");
-  const ansEl = document.getElementById("appAnswer");
   const descMap = {
     stt: "[data-text-stt]",
     kb: "[data-text-kb]",
@@ -43,7 +39,7 @@
     priv: "[data-text-priv]",
   };
 
-  function render(key) {
+  function   render(key, keepSpots) {
     const data = SCENES[key];
     if (!data) return;
 
@@ -52,19 +48,12 @@
       t.classList.toggle("is-active", on);
       t.setAttribute("aria-selected", on ? "true" : "false");
     });
-    SPOTS.forEach((s) => s.classList.toggle("is-on", s.dataset.spot === key));
 
     const descEl = document.querySelector(descMap[key]);
     if (descEl) descEl.textContent = data.desc;
-
-    qEl.textContent = data.question;
-    liveEl.textContent = data.live;
-    ansEl.innerHTML = "<p>" + data.answer + "</p>";
-    ansEl.setAttribute("aria-live", "polite");
   }
 
   TABS.forEach((t) => t.addEventListener("click", () => render(t.dataset.feature)));
-
   /* стрелочная навигация по табам (role=tablist) */
   TABS.forEach((t, i) => {
     t.addEventListener("keydown", (e) => {
@@ -81,7 +70,7 @@
     });
   });
 
-  render("stt");
+  render("stt", true);
 
   /* ---------- «губка наоборот»: замазано → открывается → «собесов» зачёркнуто ----------
      1) марка (лого+Mockingbird) стоит справа, тэглайн под ней замазан

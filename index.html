@@ -139,70 +139,12 @@
       <span class="tape tape--bl" aria-hidden="true"></span>
       <div class="hero">
       <div class="shot">
-      <div class="hero__frame">
+      <div class="hero__frame hero__frame--shot">
+        <img class="hero__img" src="assets/img/screenshot.png" alt="Скриншот приложения Mockingbird">
 
-        <!-- toolbar: как _build_toolbar() main_window.py -->
-        <div class="app__toolbar">
-          <button class="qbtn qbtn--primary" disabled title="Старт"><img class="ico" src="assets/img/play.svg" alt=""></button>
-          <button class="qbtn" title="Стоп"><img class="ico ico--err" src="assets/img/square.svg" alt=""></button>
-          <button class="qbtn" title="Мьют"><img class="ico" src="assets/img/volume-2.svg" alt=""></button>
-          <span class="app__activity" aria-hidden="true"><i></i></span>
-          <span class="app__timer" id="appTimer">00:00</span>
-          <span class="flex-spacer"></span>
-          <span class="qbadge qbadge--cpu">GPU</span>
-          <span class="qbadge qbadge--status">running</span>
-          <button class="qbtn" title="Настройки"><img class="ico" src="assets/img/settings-2.svg" alt=""></button>
-          <span class="app__logo">
-            <img src="assets/img/logo.png" alt="">
-            <span class="app__logo-text"><b>M</b>ockingbird</span>
-          </span>
-        </div>
-
-        <!-- tabs + pane: как QTabWidget::pane / interview_panel.py -->
-        <div class="app__tabs">
-          <div class="app__tabbar">
-            <span class="app__tab is-selected">Интервью</span>
-            <span class="app__tab">Резюме</span>
-            <span class="app__tab">Лог</span>
-          </div>
-
-          <div class="app__pane">
-            <!-- header: вопрос + context icon + live -->
-            <div class="app__header">
-              <div class="app__qrow">
-                <span class="app__question" id="appQuestion">Скажите что-нибудь…</span>
-                <span class="app__ctx" title="Контекст сессии">ⓘ</span>
-              </div>
-              <div class="app__live" id="appLive">● слушать…</div>
-            </div>
-
-            <!-- splitter: Ответ ИИ | История (4:1) -->
-            <div class="app__split">
-              <div class="app__answer">
-                <div class="app__answer-head">
-                  <span class="app__answer-title">Ответ ИИ</span>
-                  <button class="app__regen" title="Перегенерировать ответ">⟳</button>
-                </div>
-                <div class="app__browser" id="appAnswer">
-                  <p class="dim">Ответ появится здесь…</p>
-                </div>
-              </div>
-              <div class="app__history">
-                <span class="app__answer-title">История</span>
-                <div class="app__hist-items">
-                  <div class="app__hist-q">расскажи про CI/CD</div>
-                  <div class="app__hist-q">zabbix vs prometheus</div>
-                  <div class="app__hist-q">как устроен docker network</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- spot-маркеры (подсвечивают зоны при выборе фичи) -->
-        <span class="spot spot--stt"    data-spot="stt"    title="Вопрос интервьюера"></span>
-        <span class="spot spot--kb"     data-spot="kb"     title="База знаний / резюме"></span>
-        <span class="spot spot--llm"    data-spot="llm"    title="Ответ ИИ"></span>
+        <!-- spot-маркеры-стрелки (подсвечивают зоны при выборе фичи) -->
+        <span class="spot spot--stt"    data-spot="stt"><span class="spot__line"></span><span class="spot__label">Вопрос интервьюера</span></span>
+        <span class="spot spot--llm"    data-spot="llm"><span class="spot__line spot__line--up"></span><span class="spot__label">Ответ ИИ</span></span>
         <span class="spot spot--priv"   data-spot="priv"   title="Невидимка"></span>
       </div>
       </div>
@@ -225,7 +167,7 @@
       </div>
 
       <ul class="metrics">
-        <li class="metric"><p class="metric__row"><b>~5–6 с<sup>*</sup></b><span>от конца вопроса до ответа</span></p><i class="metric-footnote">* на GPU (CUDA)</i></li>
+        <li class="metric"><p class="metric__row"><b>~3–6 с<sup>*</sup></b><span>от конца вопроса до ответа</span></p><i class="metric-footnote">* на GPU (CUDA)</i></li>
         <li class="metric"><p class="metric__row"><b>v3-turbo</b><span>faster-whisper, CUDA</span></p></li>
         <li class="metric"><p class="metric__row"><b>Win+Linux</b><span>нативная поддержка Windows и Linux</span></p></li>
       </ul>

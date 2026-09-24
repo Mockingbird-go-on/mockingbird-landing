@@ -517,6 +517,16 @@ body::after {
   clip-path: var(--cut);   /* ровный срез ножницами — «фотография», наклеенная на бумагу */
 }
 
+/* реальный скриншот вместо HTML-реплики */
+.hero__frame--shot { padding: 0; }
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
 .flex-spacer { flex: 1; }
 
 /* --- toolbar --- */
@@ -675,31 +685,58 @@ body::after {
 }
 .app__hist-q:hover { border-color: var(--accent); }
 
-/* маркеры-обводки (печатный красный) */
+/* маркеры (печатный красный): у «Ответ ИИ» — только подпись,
+   у «Вопрос интервьюера» — подпись + изящная стрелка влево */
 .spot {
   position: absolute;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  border: 2px dashed var(--accent);
-  opacity: .35;
   pointer-events: none;
   z-index: 3;
+  display: flex;
+  align-items: center;
 }
-.spot.is-on { opacity: 1; border-style: solid; box-shadow: 0 0 0 4px rgba(198, 33, 18, .18); }
-.spot::after {
-  content: attr(title);
-  position: absolute; top: 38px; left: 50%; transform: translateX(-50%);
+.spot.is-on { opacity: 1; }
+.spot__label {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 11px; color: var(--accent);
+  font-weight: 400;
+  font-size: 19px; color: var(--accent);
   background: var(--paper);
   border-bottom: 1px solid var(--accent);
   padding: 1px 6px; white-space: nowrap;
-  z-index: 4;
 }
-.spot--stt  { top: 26%; left: 14%; }
+/* изящная стрелка влево: тонкая линия с наконечником */
+.spot__line {
+  position: relative;
+  width: 56px; height: 3px;
+  background: var(--accent);
+  margin-right: 2px;
+}
+.spot__line::before {
+  content: "";
+  position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent;
+  border-right: 9px solid var(--accent);
+  border-left: 0;
+}
+/* вертикальная стрелка вверх: линия + наконечник над подписью */
+.spot__line--up {
+  position: relative;
+  width: 3px; height: 42px;
+  background: var(--accent);
+  margin: 0 4px 2px 0;
+}
+.spot__line--up::before {
+  content: "";
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-bottom: 9px solid var(--accent);
+  border-top: 0;
+}
+.spot--stt  { top: 20%; left: 30%; }
 .spot--kb   { top: 47%; right: 4%; }
-.spot--llm  { top: 62%; left: 38%; }
+.spot--llm  { top: 70%; left: 38%; }
 .spot--priv { bottom: 8%; left: 50%; }
 
 /* ---------- RIGHT: пайплайн + метрики ---------- */

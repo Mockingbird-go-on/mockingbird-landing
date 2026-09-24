@@ -1,0 +1,53 @@
+---
+import DocsLayout from "../layouts/DocsLayout.astro";
+---
+
+<DocsLayout
+  title="Установка"
+  description="Как установить и запустить Mockingbird на Windows и Linux."
+>
+  <h1>Установка</h1>
+  <p>
+    Mockingbird — десктопное приложение на PySide6. Скачайте сборку для своей ОС
+    со <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">страницы релизов</a>.
+  </p>
+
+  <h2>Требования</h2>
+  <ul>
+    <li><strong>Windows</strong> 10/11 или <strong>Linux</strong> (x86_64).</li>
+    <li>GPU NVIDIA с CUDA — для ускорения распознавания (опционально, но рекомендовано).</li>
+    <li>~2–4 ГБ на диске под модель <code>faster-whisper large-v3-turbo</code>.</li>
+  </ul>
+
+  <h2>Windows</h2>
+  <ol>
+    <li>Скачайте <code>Mockingbird-setup.exe</code> из последнего релиза.</li>
+    <li>Запустите установщик и следуйте шагам мастера.</li>
+    <li>Запустите приложение из меню «Пуск».</li>
+  </ol>
+  <p>
+    Если CUDA не обнаружена, приложение автоматически перейдёт на CPU — распознавание
+    будет работать, но медленнее.
+  </p>
+
+  <h2>Linux</h2>
+  <ol>
+    <li>Скачайте <code>Mockingbird.AppImage</code>.</li>
+    <li>Сделайте файл исполняемым и запустите:</li>
+  </ol>
+  <pre><code>chmod +x Mockingbird.AppImage
+./Mockingbird.AppImage</code></pre>
+
+  <h2>Первый запуск</h2>
+  <ol>
+    <li>Проверьте индикатор устройства в тулбаре: <code>GPU</code> или <code>CPU</code>.</li>
+    <li>Загрузите PDF-резюме на вкладке <strong>Резюме</strong> (опционально).</li>
+    <li>Нажмите <strong>Старт</strong> и говорите — черновик появится на вкладке <strong>Интервью</strong>.</li>
+  </ol>
+
+  <h2>Обновление</h2>
+  <p>
+    Приложение проверяет новые релизы при запуске. Вручную — на
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">странице релизов</a>.
+  </p>
+</DocsLayout>

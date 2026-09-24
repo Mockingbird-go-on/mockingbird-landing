@@ -323,6 +323,8 @@ body::after {
 }
 .pill--gh { color: var(--ink); }
 .pill--gh:hover { background: var(--ink); color: var(--paper); }
+.pill--docs { color: var(--accent); border-color: var(--accent); font-weight: 700; transform: rotate(-1.5deg); }
+.pill--docs:hover { background: var(--accent); color: var(--paper); }
 .pill--version { color: var(--accent); border-color: var(--accent); transform: rotate(-3deg); }
 .pill--gpu { color: var(--ok); border-color: var(--ok); transform: rotate(2deg); }
 /* открытый код — «залитый» красный штамп */

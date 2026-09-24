@@ -1,0 +1,67 @@
+---
+import "../styles/docs.css";
+import { nav } from "../nav";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const current = Astro.url.pathname.replace(/\/+$/, "") || "/docs";
+const isActive = (href: string) => {
+  const norm = href.replace(/\/+$/, "") || "/docs";
+  return norm === current;
+};
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Mockingbird Docs</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="icon" type="image/png" href="/docs/img/favicon.png" />
+  <link rel="preload" href="/docs/fonts/Inter-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/docs/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin />
+</head>
+<body>
+  <header class="docs-header">
+    <a class="docs-header__brand" href="/docs/">
+      <img src="/docs/img/logo.png" alt="" />
+      <span class="docs-header__name"><b>M</b>ockingbird</span>
+    </a>
+    <span class="docs-header__docs">docs</span>
+    <nav class="docs-header__nav">
+      <a class="docs-header__link" href="/">на главную ↗</a>
+      <a class="docs-header__link" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <div class="docs-shell">
+    <aside class="docs-nav">
+      <span class="docs-nav__title">Содержание</span>
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} class={isActive(item.href) ? "is-active" : ""}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <main class="docs-content">
+      <slot />
+
+      <footer class="docs-footer">
+        <span>© {new Date().getFullYear()} mockingbird</span>
+        <span>
+          <a href="https://github.com/Mockingbird-go-on/mockingbird/releases">релизы</a> ·
+          <a href="https://t.me/MOCKINGBird_release">telegram</a>
+        </span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

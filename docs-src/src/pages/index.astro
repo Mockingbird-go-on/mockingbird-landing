@@ -1,0 +1,38 @@
+---
+import DocsLayout from "../layouts/DocsLayout.astro";
+import { nav } from "../nav";
+
+const cards = nav.filter((n) => n.href !== "/docs/");
+---
+
+<DocsLayout
+  title="Документация"
+  description="Документация Mockingbird: установка, настройка базы знаний и ответы на частые вопросы."
+>
+  <h1>Mockingbird docs</h1>
+  <p>
+    <strong>Mockingbird</strong> — десктопный ассистент для технических интервью:
+    локальное распознавание речи, база знаний из PDF-резюме и ответы LLM в реальном времени.
+  </p>
+
+  <h2>Разделы</h2>
+  <div class="docs-cards">
+    {cards.map((c) => (
+      <a class="docs-card" href={c.href}>
+        <h3>{c.label}</h3>
+        <p>{
+          c.label === "Установка"
+            ? "Требования, установка и первый запуск на Windows и Linux."
+            : c.label === "База знаний"
+              ? "Как загрузить PDF-резюме и управлять контекстом ответов."
+              : "Ответы на частые вопросы."
+        }</p>
+      </a>
+    ))}
+  </div>
+
+  <blockquote>
+    Инструкции обновляются вместе с релизами приложения. Исходники документации —
+    в репозитории <a href="https://github.com/Mockingbird-go-on/mockingbird-landing" target="_blank" rel="noopener">mockingbird-landing</a>.
+  </blockquote>
+</DocsLayout>

@@ -321,10 +321,6 @@ body::after {
   white-space: nowrap;
   background: transparent;
 }
-.pill--gh { color: var(--ink); }
-.pill--gh:hover { background: var(--ink); color: var(--paper); }
-.pill--docs { color: var(--accent); border-color: var(--accent); font-weight: 700; transform: rotate(-1.5deg); }
-.pill--docs:hover { background: var(--accent); color: var(--paper); }
 .pill--version { color: var(--accent); border-color: var(--accent); transform: rotate(-3deg); }
 .pill--gpu { color: var(--ok); border-color: var(--ok); transform: rotate(2deg); }
 /* открытый код — «залитый» красный штамп */
@@ -876,6 +872,17 @@ body::after {
   gap: calc(var(--grid)*1.5);
 }
 .cta-row .cta { flex: 1; }
+
+/* третья CTA — docs: отдельной строкой по центру, компактнее */
+.cta--docs {
+  width: 62%;
+  margin: calc(var(--grid)*1.5) auto 0;
+  font-size: clamp(15px, 2.3vh, 20px);
+  transform: rotate(-.8deg);
+}
+.cta--docs::before { background: var(--ink); }
+.cta--docs:hover { color: var(--paper); }
+.cta--docs:hover::before { background: var(--accent); }
 
 /* ================================================================
    FOOTER — подпись на столе

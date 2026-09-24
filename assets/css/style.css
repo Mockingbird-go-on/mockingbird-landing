@@ -772,7 +772,14 @@ body::after {
 .terminal__stage { position: relative; z-index: 1; }
 .terminal__stage.is-hot { color: #fff; background: var(--accent); padding: 0 3px; }
 .terminal__status { color: var(--ok); font-weight: 700; }
-.terminal__cursor { display: inline-block; width: .6em; height: 1.05em; background: var(--accent); vertical-align: text-bottom; }
+.terminal__cursor {
+  display: inline-block; width: .6em; height: 1.05em; background: var(--accent); vertical-align: text-bottom;
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+@keyframes cursor-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .terminal__cursor { animation: none; }
+}
 
 .metrics { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .metric {

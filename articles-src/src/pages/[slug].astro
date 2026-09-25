@@ -24,14 +24,11 @@ const articleLd = {
   headline: article.title,
   description: article.description,
   datePublished: article.date,
-  dateModified: article.date,
+  dateModified: article.dateModified ?? article.date,
   inLanguage: "ru-RU",
-  author: { "@type": "Organization", name: "Mockingbird", url: "https://mocking.ru/" },
-  publisher: {
-    "@type": "Organization",
-    name: "Mockingbird",
-    logo: { "@type": "ImageObject", url: "https://mocking.ru/assets/img/logo.png" },
-  },
+  author: { "@id": "https://mocking.ru/#org" },
+  publisher: { "@id": "https://mocking.ru/#org" },
+  image: `https://mocking.ru/assets/img/og/${article.slug}.jpg`,
   mainEntityOfPage: `https://mocking.ru/articles/${article.slug}/`,
 };
 

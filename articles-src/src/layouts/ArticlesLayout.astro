@@ -15,9 +15,16 @@ const { title, description, date, readingTime, tag, jsonLd } = Astro.props;
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/articles";
 const canonical = new URL(pathname + "/", Astro.site).href;
-const ogImage = new URL("/assets/img/og.jpg", Astro.site).href;
 
+/* OG-картинки по слагу статьи */
 const currentSlug = pathname.replace(/^\/articles\/?/, "").replace(/\/$/, "");
+const ogImage = new URL(
+  currentSlug && (currentSlug === "questions" || articles.some((a) => a.slug === currentSlug))
+    ? `/assets/img/og/${currentSlug}.jpg`
+    : "/assets/img/og.jpg",
+  Astro.site
+).href;
+
 const isArticle = currentSlug !== "" && articles.some((a) => a.slug === currentSlug);
 
 const breadcrumbLd = {
@@ -29,6 +36,32 @@ const breadcrumbLd = {
     ...(isArticle || currentSlug === "questions"
       ? [{ "@type": "ListItem", position: 3, name: title }]
       : []),
+  ],
+};
+
+/* сущности сайта: связаны с Organization на главной через @id */
+const graphLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mocking.ru/#org",
+      name: "Mockingbird",
+      url: "https://mocking.ru/",
+      logo: "https://mocking.ru/assets/img/logo.png",
+      sameAs: [
+        "https://github.com/Mockingbird-go-on/mockingbird",
+        "https://t.me/MOCKINGBird_release",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mocking.ru/#website",
+      url: "https://mocking.ru/",
+      name: "Mockingbird",
+      inLanguage: "ru-RU",
+      publisher: { "@id": "https://mocking.ru/#org" },
+    },
   ],
 };
 
@@ -64,6 +97,7 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <link rel="preload" href="/assets/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin />
 
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(graphLd)} />
   {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 </head>
 <body>

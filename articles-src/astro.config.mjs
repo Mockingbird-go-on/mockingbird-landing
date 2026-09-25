@@ -13,5 +13,9 @@ export default defineConfig({
   build: {
     assets: "_assets",
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      lastmod: new Date(),
+    }),
+  ],
 });

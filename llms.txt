@@ -38,6 +38,7 @@
 ## Статьи
 
 - Помощник на собеседовании: вопросы и ответы: https://mocking.ru/articles/questions/
+- Нейросеть для собеседования: программа, которая отвечает на вопросы: https://mocking.ru/articles/neural-network-for-interview/
 - ИИ на собеседовании: как нейросеть-помощник помогает пройти интервью: https://mocking.ru/articles/ai-assistant-for-interviews/
 - Как пройти собеседование с помощью ИИ-помощника: пошагово: https://mocking.ru/articles/pass-interview-with-ai/
 - Вопросы и ответы на собеседовании: как отвечать с подсказками: https://mocking.ru/articles/interview-questions-answers/

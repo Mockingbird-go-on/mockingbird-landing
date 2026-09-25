@@ -6,4 +6,7 @@
   <sitemap>
     <loc>https://mocking.ru/docs/sitemap-0.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://mocking.ru/articles/sitemap-0.xml</loc>
+  </sitemap>
 </sitemapindex>

@@ -22,6 +22,7 @@
 ## Ссылки
 
 - Сайт: https://mocking.ru/
+- Статьи и разборы: https://mocking.ru/articles/
 - Документация: https://mocking.ru/docs/
 - Установка: https://mocking.ru/docs/install/
 - Настройка STT-модели: https://mocking.ru/docs/setup/stt-model/
@@ -32,6 +33,13 @@
 - Репозиторий: https://github.com/Mockingbird-go-on/mockingbird
 - Релизы (скачать): https://github.com/Mockingbird-go-on/mockingbird/releases
 - Telegram-канал: https://t.me/MOCKINGBird_release
+
+## Статьи
+
+- Как выбрать ассистента для собеседований в 2026 году: https://mocking.ru/articles/how-to-choose-assistant/
+- Офлайн или облако: где обрабатывать речь на собеседовании: https://mocking.ru/articles/offline-vs-cloud-stt/
+- Почему faster-whisper large-v3-turbo — оптимальная модель: https://mocking.ru/articles/whisper-large-v3-turbo/
+- Режим Невидимка: как скрыть ассистента при шаринге экрана: https://mocking.ru/articles/privacy-invisible-mode/
 
 ## Часто задаваемые вопросы
 

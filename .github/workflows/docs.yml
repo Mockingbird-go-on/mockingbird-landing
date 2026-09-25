@@ -1,10 +1,11 @@
-name: Build docs
+name: Build docs & articles
 
 on:
   push:
     branches: [main]
     paths:
       - "docs-src/**"
+      - "articles-src/**"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
 
@@ -21,23 +22,29 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: docs-src/package-lock.json
-
-      - name: Install dependencies
-        working-directory: docs-src
-        run: npm ci
+          cache-dependency-path: |
+            docs-src/package-lock.json
+            articles-src/package-lock.json
 
       - name: Build docs
         working-directory: docs-src
-        run: npm run build
+        run: |
+          npm ci
+          npm run build
 
-      - name: Commit built docs
+      - name: Build articles
+        working-directory: articles-src
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit built output
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
+          git add docs articles
           if git diff --staged --quiet; then
-            echo "No changes in docs/"
+            echo "No changes in docs/ or articles/"
           else
             git commit -m "docs: rebuild [skip ci]"
             git push

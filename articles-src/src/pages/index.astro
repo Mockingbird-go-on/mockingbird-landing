@@ -1,0 +1,36 @@
+---
+import ArticlesLayout from "../layouts/ArticlesLayout.astro";
+import { byDate, articlePath } from "../articles";
+---
+
+<ArticlesLayout
+  title="Статьи о Mockingbird"
+  description="Статьи и разборы об ассистенте технических интервью Mockingbird: выбор инструмента, офлайн-распознавание речи, модели Whisper, приватность."
+>
+  <h1>Статьи</h1>
+  <p>
+    <strong>Коротко:</strong> здесь — разборы и гайды об ассистенте технических
+    интервью Mockingbird: как выбрать инструмент, чем офлайн лучше облака, какая
+    модель распознавания речи подходит и как сохранить приватность.
+  </p>
+
+  <h2>Читать</h2>
+  <div class="art-cards">
+    {byDate.map((a) => (
+      <a class="art-card" href={articlePath(a.slug)}>
+        <span class="art-card__meta">
+          <span class="art-card__tag">{a.tag}</span>
+          <span class="art-card__dot">·</span>
+          <span class="art-card__time">{a.readingTime}</span>
+        </span>
+        <h3>{a.title}</h3>
+        <p>{a.description}</p>
+      </a>
+    ))}
+  </div>
+
+  <blockquote>
+    Не нашли ответ? Он может быть в <a href="/docs/">документации</a> или
+    <a href="/docs/faq/">FAQ</a>.
+  </blockquote>
+</ArticlesLayout>

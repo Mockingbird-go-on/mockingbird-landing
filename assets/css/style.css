@@ -886,14 +886,17 @@ body::after {
 
 /* третья CTA — docs: отдельной строкой по центру, компактнее */
 .cta--docs {
-  width: 62%;
-  margin: calc(var(--grid)*1.5) auto 0;
+  width: 100%;
   font-size: clamp(15px, 2.3vh, 20px);
   transform: rotate(-.8deg);
 }
+.cta--docs:nth-child(2) { transform: rotate(1.2deg); }
 .cta--docs::before { background: var(--ink); }
 .cta--docs:hover { color: var(--paper); }
 .cta--docs:hover::before { background: var(--accent); }
+
+/* под-ряд с второстепенными ссылками (статьи / docs) */
+.cta-row--sub { margin-top: calc(var(--grid)*1.5); }
 
 /* ================================================================
    FOOTER — подпись на столе

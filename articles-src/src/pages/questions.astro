@@ -1,0 +1,50 @@
+---
+import ArticlesLayout from "../layouts/ArticlesLayout.astro";
+import { hubQuestions } from "../questions";
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: hubQuestions.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<ArticlesLayout
+  title="Помощник на собеседовании: вопросы и ответы"
+  description="Ответы на частые вопросы о помощнике на собеседовании: как работает, заметно ли работодателю, нужен ли интернет и видеокарта, сколько стоит."
+  jsonLd={faqLd}
+>
+  <h1>Помощник на собеседовании: вопросы и ответы</h1>
+  <p>
+    <strong>Коротко:</strong> ниже — ответы на частые вопросы об ИИ-помощнике на
+    собеседованиях: как он работает, законно ли это, заметно ли работодателю, какие
+    нужны ресурсы и сколько стоит.
+  </p>
+
+  <div class="art-faq">
+    {hubQuestions.map((item) => (
+      <details class="art-faq__item">
+        <summary>{item.q}</summary>
+        <p>
+          {item.a}
+          {item.link && (
+            <>
+              {" "}
+              <a href={item.link.href}>{item.link.label} →</a>
+            </>
+          )}
+        </p>
+      </details>
+    ))}
+  </div>
+
+  <p>
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">Mockingbird</a> —
+    офлайн-помощник на собеседованиях: локальное распознавание речи, база знаний из
+    резюме, ответы за 3–6 секунд. <a href="/docs/install/">Установка</a> занимает минуты.
+  </p>
+</ArticlesLayout>

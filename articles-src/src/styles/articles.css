@@ -394,6 +394,35 @@ body {
 }
 .art-meta__tag { color: var(--accent); font-weight: 700; }
 .art-meta time { color: var(--ink-faint); }
+
+/* FAQ-аккордеон в статье */
+.art-faq { margin: 14px 0 20px; }
+.art-faq__item {
+  border-bottom: 1px dashed var(--ink-faint);
+  padding: 10px 0;
+}
+.art-faq__item summary {
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  list-style: none;
+}
+.art-faq__item summary::-webkit-details-marker { display: none; }
+.art-faq__item summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.2em;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.art-faq__item[open] summary::before { content: "−"; }
+.art-faq__item p {
+  margin: 8px 0 4px 1.6em;
+  color: var(--ink-soft);
+}
 /* карточка-группа со списком вложенных статей */
 .art-card--group { display: block; }
 .art-card--group:hover { transform: none; box-shadow: none; }

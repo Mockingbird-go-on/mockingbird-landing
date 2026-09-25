@@ -26,7 +26,7 @@ const breadcrumbLd = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Mockingbird", item: new URL("/", Astro.site).href },
     { "@type": "ListItem", position: 2, name: "Статьи", item: new URL("/articles/", Astro.site).href },
-    ...(isArticle
+    ...(isArticle || currentSlug === "questions"
       ? [{ "@type": "ListItem", position: 3, name: title }]
       : []),
   ],
@@ -84,6 +84,9 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <aside class="art-nav">
       <span class="art-nav__title">Статьи</span>
       <ul>
+        <li>
+          <a href="/articles/questions/" class={currentSlug === "questions" ? "is-active" : ""}>Вопросы и ответы</a>
+        </li>
         {articles.map((a) => (
           <li>
             <a href={articlePath(a.slug)} class={isArticle && a.slug === currentSlug ? "is-active" : ""}>{a.title}</a>

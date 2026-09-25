@@ -1,0 +1,91 @@
+---
+import ArticlesLayout from "../layouts/ArticlesLayout.astro";
+import { articles } from "../articles";
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props as { article: (typeof articles)[number] };
+const meta = {
+  title: article.title,
+  description: article.description,
+  date: article.date,
+  readingTime: article.readingTime,
+  tag: article.tag,
+};
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  description: article.description,
+  datePublished: article.date,
+  dateModified: article.date,
+  inLanguage: "ru-RU",
+  author: { "@type": "Organization", name: "Mockingbird", url: "https://mocking.ru/" },
+  publisher: {
+    "@type": "Organization",
+    name: "Mockingbird",
+    logo: { "@type": "ImageObject", url: "https://mocking.ru/assets/img/logo.png" },
+  },
+  mainEntityOfPage: `https://mocking.ru/articles/${article.slug}/`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: article.faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const dateRu = article.date.split("-").reverse().join(".");
+---
+
+<ArticlesLayout
+  title={meta.title}
+  description={meta.description}
+  date={meta.date}
+  readingTime={meta.readingTime}
+  tag={meta.tag}
+  jsonLd={[articleLd, faqLd]}
+>
+  <h1>{article.title}</h1>
+  <p class="art-meta">
+    <span class="art-meta__tag">{article.tag}</span>
+    <time datetime={article.date}>{dateRu}</time>
+    <span>·</span>
+    <span>{article.readingTime}</span>
+  </p>
+
+  <p set:html={article.intro} />
+
+  {article.sections.map((section) => (
+    <>
+      <h2>{section.h2}</h2>
+      <Fragment set:html={section.body} />
+    </>
+  ))}
+
+  <h2>Частые вопросы</h2>
+  <div class="art-faq">
+    {article.faq.map((item) => (
+      <details class="art-faq__item">
+        <summary>{item.q}</summary>
+        <p>{item.a}</p>
+      </details>
+    ))}
+  </div>
+
+  <p>
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">Mockingbird</a> —
+    офлайн-помощник на собеседованиях: локальное распознавание речи, база знаний из
+    резюме, ответы за 3–6 секунд. <a href="/docs/install/">Установка</a> занимает минуты.
+  </p>
+</ArticlesLayout>

@@ -33,7 +33,7 @@
 - Changelog: https://mocking.ru/docs/changelog/
 - Репозиторий: https://github.com/Mockingbird-go-on/mockingbird
 - Релизы (скачать): https://github.com/Mockingbird-go-on/mockingbird/releases
-- Telegram-канал: https://t.me/MOCKINGBird_release
+- Telegram channel (Russian): https://t.me/MOCKINGBird_release
 
 ## Статьи
 
@@ -63,3 +63,65 @@
 ## Технологии
 
 PySide6, faster-whisper, Silero VAD, pypdf, single-flight LLM.
+
+# Mockingbird (English)
+
+> Mockingbird is a desktop AI interview assistant. It recognizes the
+> interviewer's questions locally (faster-whisper), mixes in context from a PDF
+> résumé knowledge base and shows LLM answers in real time. Only the LLM request
+> leaves the machine — speech, résumé and knowledge base are processed on the
+> user's computer. English site: https://mocking.ru/en/
+
+## Key facts
+
+- **What it is:** an AI assistant (teleprompter) for interviews and technical screenings.
+- **How it helps:** recognizes the question and shows a ready answer on screen; you answer in your own words.
+- **Platforms:** Windows 10/11 and Linux (x86_64).
+- **Speech recognition:** faster-whisper, large-v3-turbo model, CUDA acceleration (NVIDIA), CPU fallback.
+- **VAD:** adaptive Silero VAD — speech and silence detection.
+- **Knowledge base:** PDF résumé upload, local indexing (pypdf), relevant context for the LLM.
+- **Answers:** streamed LLM answers, single-flight question priority.
+- **Privacy:** everything local except the LLM request. Invisible Mode excludes the window from screen capture, streaming and recording.
+- **Latency:** ~3–6 seconds from the end of the question to the start of the answer on GPU (CUDA).
+- **Price:** free, open source.
+- **UI:** Interview / Résumé / Log tabs; toolbar with start/stop, mute, session timer and GPU/CPU indicator.
+- **Phonetic correction:** fixes technical terms in the live draft (e.g. "Zabix" → "Zabbix").
+
+## Links
+
+- English site: https://mocking.ru/en/
+- Articles: https://mocking.ru/articles/en/
+- Documentation: https://mocking.ru/docs/en/
+- Installation: https://mocking.ru/docs/en/install/
+- STT model setup: https://mocking.ru/docs/en/setup/stt-model/
+- Operating modes: https://mocking.ru/docs/en/setup/modes/
+- Knowledge base: https://mocking.ru/docs/en/knowledge-base/
+- FAQ: https://mocking.ru/docs/en/faq/
+- Repository: https://github.com/Mockingbird-go-on/mockingbird
+- Releases (download): https://github.com/Mockingbird-go-on/mockingbird/releases
+- Telegram channel (Russian): https://t.me/MOCKINGBird_release
+
+## Articles (English)
+
+- Interview assistant: questions and answers: https://mocking.ru/articles/en/questions/
+- Neural network for interviews: a program that answers questions: https://mocking.ru/articles/en/neural-network-for-interview/
+- AI at interviews: how a neural assistant helps you pass: https://mocking.ru/articles/en/ai-assistant-for-interviews/
+- How to pass an interview with an AI assistant: step by step: https://mocking.ru/articles/en/pass-interview-with-ai/
+- Interview questions and answers: how to answer with hints: https://mocking.ru/articles/en/interview-questions-answers/
+- Proctoring in interviews: can you use an assistant: https://mocking.ru/articles/en/proctoring/
+- A teleprompter for interviews: what it is and how it works: https://mocking.ru/articles/en/teleprompter/
+- How to choose an AI interview assistant: https://mocking.ru/articles/en/how-to-choose-assistant/
+- Offline or cloud: where to process speech: https://mocking.ru/articles/en/offline-vs-cloud-stt/
+- Why faster-whisper large-v3-turbo: https://mocking.ru/articles/en/whisper-large-v3-turbo/
+- Invisible Mode: how to hide the assistant during screen sharing: https://mocking.ru/articles/en/privacy-invisible-mode/
+
+## FAQ (English)
+
+- **What is an interview assistant?** A program that recognizes the interviewer's question and shows an answer on screen; you do the talking. See https://mocking.ru/articles/en/questions/
+- **Can the employer tell an assistant is used?** On a regular call — no, if Invisible Mode is on. Under proctoring it can be detected and is often banned.
+- **Can I use an assistant under proctoring?** As a rule, no: if the rules ban third-party tools, it's a violation. See https://mocking.ru/articles/en/proctoring/
+- **Do I need an NVIDIA GPU?** No, the app runs on CPU, but a CUDA GPU speeds recognition up a lot (~3–6 s latency).
+- **Does data go to the cloud?** Only the LLM request. Speech recognition, résumé and knowledge base are processed locally.
+- **What is Invisible Mode?** The assistant window never gets into screen sharing, streaming or recording — hints are visible only on your monitor.
+- **Which platforms are supported?** Windows 10/11 and Linux.
+- **How much does it cost?** Free, the source code is open.

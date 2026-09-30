@@ -334,6 +334,26 @@ body::after {
 }
 .pill--version { color: var(--accent); border-color: var(--accent); transform: rotate(-3deg); }
 .pill--gpu { color: var(--ok); border-color: var(--ok); transform: rotate(2deg); }
+
+/* переключатель языка — двойная рамка, как почтовый штамп */
+.pill--lang {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 var(--ink), inset 0 0 0 2px var(--paper), inset 0 0 0 3.5px var(--ink);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.pill--lang:hover {
+  transform: rotate(-2deg) translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink), inset 0 0 0 2px var(--paper), inset 0 0 0 3.5px var(--ink);
+}
+.pill--lang:active { transform: rotate(-2deg) translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink), inset 0 0 0 2px var(--paper), inset 0 0 0 3.5px var(--ink); }
+
 /* открытый код — «залитый» красный штамп */
 .pill--oss {
   color: var(--paper);

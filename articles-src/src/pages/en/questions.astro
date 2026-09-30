@@ -1,0 +1,51 @@
+---
+import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import { hubQuestionsEn } from "../../questions-en";
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: hubQuestionsEn.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<ArticlesLayout
+  title="Interview Assistant: Questions and Answers"
+  description="Answers to common questions about interview assistants: how they work, whether the employer notices, do you need internet and a GPU, how much it costs."
+  jsonLd={faqLd}
+  locale="en"
+>
+  <h1>Interview assistant: questions and answers</h1>
+  <p>
+    <strong>In short:</strong> below are answers to common questions about AI
+    interview assistants: how they work, is it legal, does the employer notice,
+    what resources are needed and how much it costs.
+  </p>
+
+  <div class="art-faq">
+    {hubQuestionsEn.map((item) => (
+      <details class="art-faq__item">
+        <summary>{item.q}</summary>
+        <p>
+          {item.a}
+          {item.link && (
+            <>
+              {" "}
+              <a href={item.link.href}>{item.link.label} →</a>
+            </>
+          )}
+        </p>
+      </details>
+    ))}
+  </div>
+
+  <p>
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">Mockingbird</a> —
+    an offline interview assistant: local speech recognition, a knowledge base built
+    from your résumé, answers in 3–6 seconds. <a href="/docs/en/install/">Installation</a> takes minutes.
+  </p>
+</ArticlesLayout>

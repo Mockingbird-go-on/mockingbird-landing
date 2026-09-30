@@ -1,0 +1,82 @@
+---
+import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import { articlesEn } from "../../articles";
+
+export function getStaticPaths() {
+  return articlesEn.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props as { article: (typeof articlesEn)[number] };
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  description: article.description,
+  datePublished: article.date,
+  dateModified: article.dateModified ?? article.date,
+  inLanguage: "en-US",
+  author: { "@id": "https://mocking.ru/#org" },
+  publisher: { "@id": "https://mocking.ru/#org" },
+  image: `https://mocking.ru/assets/img/og/${article.slug}.jpg`,
+  mainEntityOfPage: `https://mocking.ru/articles/en/${article.slug}/`,
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: article.faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const dateEn = article.date;
+---
+
+<ArticlesLayout
+  title={article.title}
+  description={article.description}
+  date={article.date}
+  readingTime={article.readingTime}
+  tag={article.tag}
+  jsonLd={[articleLd, faqLd]}
+  locale="en"
+>
+  <h1>{article.title}</h1>
+  <p class="art-meta">
+    <span class="art-meta__tag">{article.tag}</span>
+    <time datetime={article.date}>{dateEn}</time>
+    <span>·</span>
+    <span>{article.readingTime}</span>
+  </p>
+
+  <p set:html={article.intro} />
+
+  {article.sections.map((section) => (
+    <>
+      <h2>{section.h2}</h2>
+      <Fragment set:html={section.body} />
+    </>
+  ))}
+
+  <h2>FAQ</h2>
+  <div class="art-faq">
+    {article.faq.map((item) => (
+      <details class="art-faq__item">
+        <summary>{item.q}</summary>
+        <p>{item.a}</p>
+      </details>
+    ))}
+  </div>
+
+  <p>
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">Mockingbird</a> —
+    an offline interview assistant: local speech recognition, a knowledge base built
+    from your résumé, answers in 3–6 seconds. <a href="/docs/en/install/">Installation</a> takes minutes.
+  </p>
+</ArticlesLayout>

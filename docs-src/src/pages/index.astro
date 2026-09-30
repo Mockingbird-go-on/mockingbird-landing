@@ -1,8 +1,8 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import { nav, isGroup } from "../nav";
+import { navByLocale, isGroup } from "../nav";
 
-const entries = nav.filter((n) => !(!isGroup(n) && n.href === "/docs/"));
+const entries = navByLocale.ru.filter((n) => !(!isGroup(n) && n.href === "/docs/"));
 ---
 
 <DocsLayout

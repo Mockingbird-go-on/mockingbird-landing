@@ -183,6 +183,30 @@ body {
   border-bottom: 1px solid transparent;
 }
 .art-header__link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+/* переключатель языка — акцентная кнопка */
+.art-header__lang {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  padding: 4px 12px;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 var(--accent);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.art-header__lang:hover {
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: rotate(-2deg) translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
 /* changelog — отдельная кнопка справа */
 .art-header__cta {
   font-family: var(--font-mono);

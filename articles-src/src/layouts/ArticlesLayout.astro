@@ -1,6 +1,7 @@
 ---
 import "../styles/articles.css";
-import { articles, articlePath } from "../articles";
+import { articles, articlesEn, articlePath } from "../articles";
+import type { Locale } from "../i18n";
 
 export interface Props {
   title: string;
@@ -9,30 +10,54 @@ export interface Props {
   readingTime?: string;
   tag?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
 }
 
-const { title, description, date, readingTime, tag, jsonLd } = Astro.props;
+const { title, description, date, readingTime, tag, jsonLd, locale = "ru" } = Astro.props;
+const lang = locale === "en" ? "en" : "ru";
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/articles";
 const canonical = new URL(pathname + "/", Astro.site).href;
 
 /* OG-картинки по слагу статьи */
-const currentSlug = pathname.replace(/^\/articles\/?/, "").replace(/\/$/, "");
+const currentSlug = pathname.replace(/^\/articles(\/en)?\/?/, "").replace(/\/$/, "");
+const slugList = locale === "en" ? articlesEn : articles;
 const ogImage = new URL(
-  currentSlug && (currentSlug === "questions" || articles.some((a) => a.slug === currentSlug))
+  currentSlug && (currentSlug === "questions" || slugList.some((a) => a.slug === currentSlug))
     ? `/assets/img/og/${currentSlug}.jpg`
     : "/assets/img/og.jpg",
   Astro.site
 ).href;
 
-const isArticle = currentSlug !== "" && articles.some((a) => a.slug === currentSlug);
+const isArticle = currentSlug !== "" && slugList.some((a) => a.slug === currentSlug);
+
+/* пары RU ↔ EN для hreflang и переключателя */
+const isEn = locale === "en";
+const altPath = isEn
+  ? pathname.replace(/^\/articles\/en/, "/articles")
+  : pathname.replace(/^\/articles/, "/articles/en");
+const altExists = isEn
+  ? articles.some((a) => a.slug === currentSlug) || currentSlug === "" || currentSlug === "questions"
+  : articlesEn.some((a) => a.slug === currentSlug) || currentSlug === "" || currentSlug === "questions";
+const altCanonical = altExists ? new URL(altPath.replace(/\/+$/, "") + "/", Astro.site).href : undefined;
+
+/* автоперенос на язык браузера при первом визите, выбор сохраняется */
+const langRedirect = `
+(function(){try{
+  if(localStorage.getItem('mb-lang'))return;
+  var pref=(navigator.language||'').toLowerCase().startsWith('en')?'en':'ru';
+  if(pref==='${locale}')return;
+  var base=location.pathname.replace(/\\/+$/,'');
+  var target = base${isEn ? ".replace(/\\/en$/,'') + '/'" : " + '/en/'"};
+  location.replace(target);
+}catch(e){}})();`;
 
 const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Mockingbird", item: new URL("/", Astro.site).href },
-    { "@type": "ListItem", position: 2, name: "Статьи", item: new URL("/articles/", Astro.site).href },
+    { "@type": "ListItem", position: 2, name: isEn ? "Articles" : "Статьи", item: new URL(isEn ? "/articles/en/" : "/articles/", Astro.site).href },
     ...(isArticle || currentSlug === "questions"
       ? [{ "@type": "ListItem", position: 3, name: title }]
       : []),
@@ -56,20 +81,28 @@ const graphLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://mocking.ru/#website",
-      url: "https://mocking.ru/",
+      "@id": isEn ? "https://mocking.ru/en/#website" : "https://mocking.ru/#website",
+      url: isEn ? "https://mocking.ru/en/" : "https://mocking.ru/",
       name: "Mockingbird",
-      inLanguage: "ru-RU",
+      inLanguage: isEn ? "en-US" : "ru-RU",
       publisher: { "@id": "https://mocking.ru/#org" },
     },
   ],
 };
 
+const switchLang = isEn ? "ru" : "en";
+const switchOnclick = `try{localStorage.setItem('mb-lang','${switchLang}')}catch(e){}`;
+
 const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+const T = {
+  ru: { articlesLabel: "статьи", toMain: "на главную ↗", docs: "docs ↗", allArticles: "все статьи", navTitle: "Статьи", questionsLink: "Вопросы и ответы", releases: "релизы", langSwitch: "EN" },
+  en: { articlesLabel: "articles", toMain: "home ↗", docs: "docs ↗", allArticles: "all articles", navTitle: "Articles", questionsLink: "Questions & answers", releases: "releases", langSwitch: "RU" },
+}[locale];
 ---
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,6 +110,8 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   {description && <meta name="description" content={description} />}
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonical} />
+  {altCanonical && <link rel="alternate" hreflang={isEn ? "ru" : "en"} href={altCanonical} />}
+  {altCanonical && <link rel="alternate" hreflang="x-default" href={isEn ? altCanonical : canonical} />}
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
 
   <meta property="og:type" content={isArticle ? "article" : "website"} />
@@ -85,7 +120,7 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   {description && <meta property="og:description" content={description} />}
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:locale" content={isEn ? "en_US" : "ru_RU"} />
   {date && <meta property="article:published_time" content={date} />}
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -96,34 +131,37 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <link rel="preload" href="/assets/fonts/Inter-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin />
 
+  {altExists && <script set:html={langRedirect} />}
+
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(graphLd)} />
   {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 </head>
 <body>
   <header class="art-header">
-    <a class="art-header__brand" href="/">
+    <a class="art-header__brand" href={isEn ? "/en/" : "/"}>
       <img src="/assets/img/logo.png" alt="" />
       <span class="art-header__name"><b>M</b>ockingbird</span>
     </a>
-    <span class="art-header__docs">статьи</span>
+    <span class="art-header__docs">{T.articlesLabel}</span>
     <nav class="art-header__nav">
-      <a class="art-header__link" href="/">на главную ↗</a>
-      <a class="art-header__link" href="/docs/">docs ↗</a>
-      <a class="art-header__cta" href="/articles/">все статьи</a>
+      {altExists && <a class="art-header__lang" href={altPath.replace(/\/+$/, "") + "/"} onclick={switchOnclick} title={isEn ? "Перейти на русский" : "Switch to English"}>{T.langSwitch}</a>}
+      <a class="art-header__link" href={isEn ? "/en/" : "/"}>{T.toMain}</a>
+      <a class="art-header__link" href={isEn ? "/docs/en/" : "/docs/"}>{T.docs}</a>
+      <a class="art-header__cta" href={isEn ? "/articles/en/" : "/articles/"}>{T.allArticles}</a>
     </nav>
   </header>
 
   <div class="art-shell">
     <aside class="art-nav">
-      <span class="art-nav__title">Статьи</span>
+      <span class="art-nav__title">{T.navTitle}</span>
       <ul>
         <li>
-          <a href="/articles/questions/" class={currentSlug === "questions" ? "is-active" : ""}>Вопросы и ответы</a>
+          <a href={isEn ? "/articles/en/questions/" : "/articles/questions/"} class={currentSlug === "questions" ? "is-active" : ""}>{T.questionsLink}</a>
         </li>
-        {articles.map((a) => (
+        {slugList.map((a) => (
           <li>
-            <a href={articlePath(a.slug)} class={isArticle && a.slug === currentSlug ? "is-active" : ""}>{a.title}</a>
+            <a href={articlePath(a.slug, locale)} class={isArticle && a.slug === currentSlug ? "is-active" : ""}>{a.title}</a>
           </li>
         ))}
       </ul>
@@ -135,8 +173,8 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <footer class="art-footer">
         <span>© {new Date().getFullYear()} mockingbird</span>
         <span>
-          <a href="https://github.com/Mockingbird-go-on/mockingbird/releases">релизы</a> ·
-          <a href="https://t.me/MOCKINGBird_release">telegram</a>
+          <a href="https://github.com/Mockingbird-go-on/mockingbird/releases">{T.releases}</a> ·
+          <a href="https://t.me/MOCKINGBird_release">telegram{isEn ? " (Russian)" : ""}</a>
         </span>
       </footer>
     </main>

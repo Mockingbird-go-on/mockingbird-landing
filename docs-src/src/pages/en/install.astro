@@ -1,0 +1,102 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const howToLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to install Mockingbird",
+  description: "Installing the Mockingbird desktop interview assistant on Windows and Linux.",
+  totalTime: "PT10M",
+  tool: [{ "@type": "HowToTool", name: "A Windows 10/11 or Linux x86_64 computer" }],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Download the build",
+      text: "Open the GitHub releases page and download the installer for your OS: Mockingbird-setup.exe for Windows or Mockingbird.AppImage for Linux.",
+      url: "https://mocking.ru/docs/en/install/#windows",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Install",
+      text: "On Windows run the installer and follow the wizard. On Linux make the AppImage executable and run it.",
+      url: "https://mocking.ru/docs/en/install/#linux",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Launch and check the device",
+      text: "Launch the app and check the toolbar indicator: GPU if CUDA is available, otherwise CPU.",
+      url: "https://mocking.ru/docs/en/install/#first-launch",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Load your résumé",
+      text: "On the Résumé tab upload a PDF résumé — it becomes the knowledge base for answers.",
+      url: "https://mocking.ru/docs/en/knowledge-base/",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Start working",
+      text: "Press Start and speak — the draft appears on the Interview tab.",
+      url: "https://mocking.ru/docs/en/setup/modes/",
+    },
+  ],
+};
+---
+
+<DocsLayout
+  title="Installation"
+  description="How to download, install and launch Mockingbird on Windows and Linux (x86_64)."
+  jsonLd={howToLd}
+  locale="en"
+>
+  <h1>Installation</h1>
+  <p>
+    Mockingbird is a PySide6 desktop app for Windows 10/11 and Linux (x86_64).
+    Download the build for your OS from the
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">releases page</a>.
+  </p>
+
+  <h2>Requirements</h2>
+  <ul>
+    <li><strong>Windows</strong> 10/11 or <strong>Linux</strong> (x86_64).</li>
+    <li>NVIDIA GPU with CUDA — to accelerate speech recognition (optional, but recommended).</li>
+    <li>~2–4 GB of disk space for the <code>faster-whisper large-v3-turbo</code> model.</li>
+  </ul>
+
+  <h2 id="windows">Windows</h2>
+  <ol>
+    <li>Download <code>Mockingbird-setup.exe</code> from the latest release.</li>
+    <li>Run the installer and follow the wizard steps.</li>
+    <li>Launch the app from the Start menu.</li>
+  </ol>
+  <p>
+    If CUDA is not detected, the app automatically falls back to CPU — recognition
+    still works, just slower.
+  </p>
+
+  <h2 id="linux">Linux</h2>
+  <ol>
+    <li>Download <code>Mockingbird.AppImage</code>.</li>
+    <li>Make the file executable and run it:</li>
+  </ol>
+  <pre><code>chmod +x Mockingbird.AppImage
+./Mockingbird.AppImage</code></pre>
+
+  <h2 id="first-launch">First launch</h2>
+  <ol>
+    <li>Check the device indicator in the toolbar: <code>GPU</code> or <code>CPU</code>.</li>
+    <li>Upload a PDF résumé on the <strong>Résumé</strong> tab (optional).</li>
+    <li>Press <strong>Start</strong> and speak — the draft appears on the <strong>Interview</strong> tab.</li>
+  </ol>
+
+  <h2>Updating</h2>
+  <p>
+    The app checks for new releases on startup. Manually — on the
+    <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">releases page</a>.
+  </p>
+
+  <p>
+    Next: <a href="/docs/en/setup/stt-model/">choosing an STT model</a> and
+    <a href="/docs/en/setup/modes/">operating modes</a>.
+  </p>
+</DocsLayout>

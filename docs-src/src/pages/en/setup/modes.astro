@@ -1,0 +1,69 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+---
+
+<DocsLayout
+  title="Operating modes"
+  description="Configuring the question source (system audio, microphone) in Mockingbird, testing, and Invisible Mode for hiding during screen sharing."
+  locale="en"
+>
+  <h1>Operating modes</h1>
+  <p>
+    <strong>In short:</strong> the operating mode determines where Mockingbird gets
+    the interviewer's questions — system audio, microphone, or both streams — and
+    how it displays hints. Below: configuring the question source, testing, and
+    Invisible Mode.
+  </p>
+
+  <h2>Question source</h2>
+  <ul>
+    <li>
+      <strong>System audio.</strong> The app captures the other party's audio
+      directly from the system — works for Zoom, Meet and Teams calls.
+    </li>
+    <li>
+      <strong>Microphone.</strong> Your own speech is recognized — handy for
+      practising answers and self-checking.
+    </li>
+    <li>
+      <strong>Mixed.</strong> Your voice and the other party's voice at the same
+      time; the app separates the streams.
+    </li>
+  </ul>
+
+  <h2>Configuring the source</h2>
+  <ol>
+    <li>Open <strong>Settings</strong> in the toolbar.</li>
+    <li>In the source section, pick the capture device (system audio or microphone).</li>
+    <li>Check the signal level — the activity indicator should react to voice.</li>
+  </ol>
+
+  <h2>Testing</h2>
+  <ol>
+    <li>Press <strong>Start</strong> — the status changes to <code>running</code>.</li>
+    <li>Say a test phrase: the draft appears on the <strong>Interview</strong> tab.</li>
+    <li>Make sure the recognized text matches what you said.</li>
+    <li>Ask a question by voice — check that the answer arrives within the expected time.</li>
+  </ol>
+  <blockquote>
+    If no text appears — check the selected device and signal level, and that the
+    app isn't paused (the <strong>Mute</strong> button).
+  </blockquote>
+
+  <h2>Invisible Mode</h2>
+  <p>
+    A separate privacy mode: the assistant window is excluded from screen capture
+    and never gets into streams or recordings. Enabled in settings or with a hotkey.
+  </p>
+
+  <h2>Common issues</h2>
+  <ul>
+    <li><strong>Silence in the draft.</strong> Wrong device selected or the system blocks capture — check permissions.</li>
+    <li><strong>Too much noise text.</strong> Lower the VAD sensitivity or switch to the microphone.</li>
+    <li><strong>Answers lag.</strong> Check that the GPU is active and reduce the STT model size.</li>
+  </ul>
+
+  <p>
+    See also: <a href="/docs/en/setup/stt-model/">Choosing an STT model</a>.
+  </p>
+</DocsLayout>

@@ -1,0 +1,99 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const faq = [
+  {
+    q: "Do I need an NVIDIA GPU for Mockingbird?",
+    a: "No. The app runs on CPU, but an NVIDIA GPU with CUDA significantly speeds up speech recognition and cuts answer latency to ~3–6 seconds.",
+  },
+  {
+    q: "Does my data go to the cloud?",
+    a: "Only the LLM request leaves your machine. Speech recognition, the PDF résumé and the knowledge base are processed locally on your computer.",
+  },
+  {
+    q: "What is Invisible Mode?",
+    a: "A privacy mode in which the Mockingbird window is excluded from screen capture: during screen sharing and streaming it is invisible both in recordings and to viewers.",
+  },
+  {
+    q: "Which platforms are supported?",
+    a: "Windows 10/11 and Linux (x86_64).",
+  },
+  {
+    q: "How much does Mockingbird cost?",
+    a: "Free. The app is open source and available for download on the releases page.",
+  },
+  {
+    q: "How fast is the answer?",
+    a: "Typical latency is 3–6 seconds from the end of the question to the start of the answer on a GPU with CUDA. On CPU it takes longer.",
+  },
+  {
+    q: "How do I choose a speech recognition model?",
+    a: "The default is faster-whisper large-v3-turbo — the best balance of accuracy and speed on GPU. On weaker hardware pick smaller models from the table in the 'Choosing an STT model' section.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<DocsLayout
+  title="FAQ"
+  description="Common questions about Mockingbird: privacy, CUDA, Invisible Mode, price and supported platforms."
+  jsonLd={faqLd}
+  locale="en"
+>
+  <h1>FAQ</h1>
+  <p>
+    Answers to common questions about the Mockingbird technical interview assistant:
+    privacy, hardware requirements, Invisible Mode and more.
+  </p>
+
+  <h2>Do I need an NVIDIA GPU?</h2>
+  <p>
+    No. On CPU recognition works, but slower. A GPU with CUDA accelerates
+    <code>faster-whisper</code> and reduces answer latency.
+  </p>
+
+  <h2>Does my data go to the cloud?</h2>
+  <p>
+    Only the LLM request leaves your machine. Speech recognition, your résumé and
+    the knowledge base are processed locally on your computer.
+  </p>
+
+  <h2>What is Invisible Mode?</h2>
+  <p>
+    The assistant window is excluded from screen capture: during sharing and
+    streaming it is invisible both in recordings and to viewers.
+  </p>
+
+  <h2>Which platforms are supported?</h2>
+  <p>Windows 10/11 and Linux (x86_64).</p>
+
+  <h2>How much does Mockingbird cost?</h2>
+  <p>Free, the source code is open.</p>
+
+  <h2>The app doesn't see my GPU</h2>
+  <p>
+    Check your CUDA drivers and that the build ships with GPU support. The toolbar
+    indicator should show <code>GPU</code>; otherwise <code>CPU</code> is used.
+  </p>
+
+  <h2>The answer takes too long</h2>
+  <p>
+    Typical latency is <strong>3–6 s</strong> from the end of the question to the
+    answer on GPU. If it's longer — make sure the model is loaded and the GPU is active.
+  </p>
+
+  <h2>How do I update?</h2>
+  <p>
+    Via the <a href="https://github.com/Mockingbird-go-on/mockingbird/releases" target="_blank" rel="noopener">releases page</a>
+    or through the new-version notification on startup.
+  </p>
+</DocsLayout>

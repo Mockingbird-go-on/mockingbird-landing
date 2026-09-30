@@ -1,0 +1,47 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { navByLocale, isGroup } from "../../nav";
+
+const entries = navByLocale.en.filter((n) => !(!isGroup(n) && n.href === "/docs/en/"));
+---
+
+<DocsLayout
+  title="Documentation"
+  description="Mockingbird documentation — an AI interview assistant: installation, STT model setup, operating modes, knowledge base and FAQ."
+  locale="en"
+>
+  <h1>Mockingbird docs</h1>
+  <p>
+    <strong>Mockingbird</strong> is a desktop AI assistant for interviews:
+    local speech recognition, a knowledge base built from your PDF résumé,
+    and real-time LLM answers. Works on Windows and Linux; the only thing
+    that leaves your machine is the LLM request.
+  </p>
+
+  <h2>Sections</h2>
+  <div class="docs-cards">
+    {entries.map((entry) =>
+      isGroup(entry) ? (
+        <div class="docs-card docs-card--group">
+          <h3>{entry.label}</h3>
+          <p>{entry.desc}</p>
+          <ul class="docs-card__links">
+            {entry.items.map((item) => (
+              <li><a href={item.href}>{item.label} →</a></li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <a class="docs-card" href={entry.href}>
+          <h3>{entry.label}</h3>
+          <p>{entry.desc}</p>
+        </a>
+      )
+    )}
+  </div>
+
+  <blockquote>
+    Instructions are updated together with app releases. Documentation sources are in the
+    <a href="https://github.com/Mockingbird-go-on/mockingbird-landing" target="_blank" rel="noopener">mockingbird-landing</a> repository.
+  </blockquote>
+</DocsLayout>

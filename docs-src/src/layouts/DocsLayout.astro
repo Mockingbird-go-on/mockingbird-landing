@@ -1,14 +1,20 @@
 ---
 import "../styles/docs.css";
-import { nav, isGroup, flatNav } from "../nav";
+import { navByLocale, isGroup, flatNav, counterpart } from "../nav";
+import type { Locale } from "../i18n";
+import { UI } from "../i18n";
 
 export interface Props {
   title: string;
   description?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
 }
 
-const { title, description, jsonLd } = Astro.props;
+const { title, description, jsonLd, locale = "ru" } = Astro.props;
+const t = UI[locale];
+const nav = navByLocale[locale];
+const lang = locale === "en" ? "en" : "ru";
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/docs";
 const canonical = new URL(pathname + "/", Astro.site).href;
@@ -19,14 +25,28 @@ const isActive = (href: string) => {
   return norm === pathname;
 };
 
+const altHref = counterpart(pathname);
+const altCanonical = altHref ? new URL(altHref.replace(/\/+$/, "") + "/", Astro.site).href : undefined;
+
+/* автоперенос на язык браузера при первом визите, выбор сохраняется */
+const langRedirect = `
+(function(){try{
+  if(localStorage.getItem('mb-lang'))return;
+  var pref=(navigator.language||'').toLowerCase().startsWith('en')?'en':'ru';
+  if(pref==='${locale}')return;
+  var base=location.pathname.replace(/\\/+$/,'');
+  var target = base${locale === "ru" ? " + '/en/'" : ".replace(/\\/en$/,'') + '/'"};
+  location.replace(target);
+}catch(e){}})();`;
+
 /* хлебные крошки: Главная → Docs → раздел(ы) */
-const current = flatNav.find((item) => isActive(item.href));
+const current = flatNav(locale).find((item) => isActive(item.href));
 const crumbs: { name: string; url?: string }[] = [{ name: "Mockingbird", url: new URL("/", Astro.site).href }];
-if (current && current.href !== "/docs/") {
-  const segs = current.href.replace(/^\/docs\//, "").replace(/\/$/, "").split("/");
-  crumbs.push({ name: "Документация", url: new URL("/docs/", Astro.site).href });
+if (current && current.href !== nav[0].href) {
+  const segs = current.href.replace(/^\/docs(\/en)?\//, "").replace(/\/$/, "").split("/");
+  crumbs.push({ name: t.breadcrumbDocs, url: new URL(nav[0].href, Astro.site).href });
   // промежуточные разделы (например «Настройка») — только если есть группа
-  let acc = "/docs";
+  let acc = current.href.substring(0, current.href.length - 1);
   segs.forEach((seg, i) => {
     acc += "/" + seg;
     const isLast = i === segs.length - 1;
@@ -38,7 +58,7 @@ if (current && current.href !== "/docs/") {
     }
   });
 } else {
-  crumbs.push({ name: "Документация", url: new URL("/docs/", Astro.site).href });
+  crumbs.push({ name: t.breadcrumbDocs, url: new URL(nav[0].href, Astro.site).href });
 }
 
 const breadcrumbLd = {
@@ -52,11 +72,14 @@ const breadcrumbLd = {
   })),
 };
 
+const switchLang = locale === "ru" ? "en" : "ru";
+const switchOnclick = `try{localStorage.setItem('mb-lang','${switchLang}')}catch(e){}`;
+
 const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -64,6 +87,8 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   {description && <meta name="description" content={description} />}
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonical} />
+  {altCanonical && <link rel="alternate" hreflang={locale === "ru" ? "en" : "ru"} href={altCanonical} />}
+  {altCanonical && <link rel="alternate" hreflang="x-default" href={locale === "ru" ? canonical : altCanonical} />}
   <link rel="icon" type="image/png" href="/docs/img/favicon.png" />
 
   <meta property="og:type" content="article" />
@@ -72,7 +97,7 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   {description && <meta property="og:description" content={description} />}
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:locale" content={locale === "en" ? "en_US" : "ru_RU"} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={`${title} — Mockingbird Docs`} />
@@ -82,27 +107,30 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <link rel="preload" href="/docs/fonts/Inter-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/docs/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin />
 
+  {altHref && <script set:html={langRedirect} />}
+
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 </head>
 <body>
   <header class="docs-header">
-    <a class="docs-header__brand" href="/docs/">
+    <a class="docs-header__brand" href={nav[0].href}>
       <img src="/docs/img/logo.png" alt="" />
       <span class="docs-header__name"><b>M</b>ockingbird</span>
     </a>
-    <span class="docs-header__docs">docs</span>
+    <span class="docs-header__docs">{t.docsLabel}</span>
     <nav class="docs-header__nav">
-      <a class="docs-header__link" href="/">на главную ↗</a>
-      <a class="docs-header__link" href="/articles/">статьи</a>
-      <a class="docs-header__link" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="docs-header__cta" href="/docs/changelog/">changelog</a>
+      {altHref && <a class="docs-header__lang" href={altHref} onclick={switchOnclick} title={locale === "ru" ? "Switch to English" : "Перейти на русский"}>{t.langSwitch}</a>}
+      <a class="docs-header__link" href="/">{t.toMain}</a>
+      <a class="docs-header__link" href={locale === "en" ? "/articles/en/" : "/articles/"}>{t.articles}</a>
+      <a class="docs-header__link" href="https://github.com/Mockingbird-go-on/mockingbird" target="_blank" rel="noopener">{t.github}</a>
+      {locale === "ru" && <a class="docs-header__cta" href="/docs/changelog/">changelog</a>}
     </nav>
   </header>
 
   <div class="docs-shell">
     <aside class="docs-nav">
-      <span class="docs-nav__title">Содержание</span>
+      <span class="docs-nav__title">{t.toc}</span>
       <ul>
         {nav.map((entry) =>
           isGroup(entry) ? (
@@ -131,8 +159,8 @@ const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <footer class="docs-footer">
         <span>© {new Date().getFullYear()} mockingbird</span>
         <span>
-          <a href="https://github.com/Mockingbird-go-on/mockingbird/releases">релизы</a> ·
-          <a href="https://t.me/MOCKINGBird_release">telegram</a>
+          <a href="https://github.com/Mockingbird-go-on/mockingbird/releases">{t.releases}</a> ·
+          <a href="https://t.me/MOCKINGBird_release">{t.telegram}{locale === "en" ? " (Russian)" : ""}</a>
         </span>
       </footer>
     </main>

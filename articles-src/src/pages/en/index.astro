@@ -1,0 +1,47 @@
+---
+import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import { byDateEn, articlePath } from "../../articles";
+---
+
+<ArticlesLayout
+  title="Articles About Interview Assistants"
+  description="Articles about AI interview assistants: how to pass an interview with a neural network, questions and answers, proctoring, offline speech recognition and privacy."
+  locale="en"
+>
+  <h1>Articles</h1>
+  <p>
+    <strong>In short:</strong> here are guides and analyses about AI interview
+    assistants: how they work, how to pass an interview with a neural network,
+    how to answer questions with hints, what to do about proctoring and how to
+    keep your privacy.
+  </p>
+
+  <h2>Read</h2>
+  <div class="art-cards">
+    {byDateEn.map((a) => (
+      <a class="art-card" href={articlePath(a.slug, "en")}>
+        <span class="art-card__meta">
+          <span class="art-card__tag">{a.tag}</span>
+          <span class="art-card__dot">·</span>
+          <span class="art-card__time">{a.readingTime}</span>
+        </span>
+        <h3>{a.title}</h3>
+        <p>{a.description}</p>
+      </a>
+    ))}
+    <a class="art-card" href="/articles/en/questions/">
+      <span class="art-card__meta">
+        <span class="art-card__tag">FAQ</span>
+        <span class="art-card__dot">·</span>
+        <span class="art-card__time">17 answers</span>
+      </span>
+      <h3>Interview assistant: questions and answers</h3>
+      <p>Short answers to common questions: how it works, is it noticeable, do you need internet.</p>
+    </a>
+  </div>
+
+  <blockquote>
+    Didn't find your answer? It may be in the <a href="/docs/en/">documentation</a> or
+    <a href="/docs/en/faq/">FAQ</a>.
+  </blockquote>
+</ArticlesLayout>

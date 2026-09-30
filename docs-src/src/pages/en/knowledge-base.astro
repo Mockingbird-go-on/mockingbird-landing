@@ -1,0 +1,43 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+---
+
+<DocsLayout
+  title="Knowledge base"
+  description="How to load a PDF résumé into Mockingbird, how the knowledge base affects LLM answers and how to refresh the context."
+  locale="en"
+>
+  <h1>Knowledge base</h1>
+  <p>
+    <strong>In short:</strong> the knowledge base is the context the LLM relies on
+    when building answers. In Mockingbird it's usually a PDF résumé and technology
+    notes. The file is processed locally and never sent anywhere.
+  </p>
+
+  <h2>Loading a résumé</h2>
+  <ol>
+    <li>Open the <strong>Résumé</strong> tab.</li>
+    <li>Click <strong>Upload PDF</strong> and pick a file.</li>
+    <li>Wait for indexing — the app shows the number of chunks.</li>
+  </ol>
+  <blockquote>
+    The résumé is processed locally via <code>pypdf</code> — the file is never uploaded anywhere.
+  </blockquote>
+
+  <h2>How it affects answers</h2>
+  <p>
+    When the interviewer asks a question, relevant knowledge base chunks are mixed
+    into the LLM context. The more precise and structured your résumé, the more
+    specific the answers.
+  </p>
+  <ul>
+    <li>List technologies and projects with details (what you did, with which tools).</li>
+    <li>Split it into sections: <em>Experience</em>, <em>Stack</em>, <em>Projects</em>.</li>
+    <li>Avoid scanned images without a text layer.</li>
+  </ul>
+
+  <h2>Refreshing the knowledge</h2>
+  <p>
+    To replace the context — upload a new PDF again: the old chunks are re-indexed.
+  </p>
+</DocsLayout>

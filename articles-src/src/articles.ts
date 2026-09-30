@@ -558,4 +558,546 @@ export const articles: Article[] = [
 
 export const byDate = [...articles].sort((a, b) => (a.date < b.date ? 1 : -1));
 
-export const articlePath = (slug: string) => `/articles/${slug}/`;
+export const articlePath = (slug: string, locale: "ru" | "en" = "ru") =>
+  locale === "en" ? `/articles/en/${slug}/` : `/articles/${slug}/`;
+
+/* ============================================================
+ * EN articles — translation of the RU set above.
+ * Links inside bodies are rewritten to /articles/en/... and /docs/en/...
+ * ========================================================== */
+export const articlesEn: Article[] = [
+  {
+    slug: "neural-network-for-interview",
+    title: "Neural Network for Interviews: a Program That Answers Questions",
+    description:
+      "A neural network for interviews: how a program listens to the interviewer's questions and answers in real time. How it differs from a chatbot, what it needs to run, and where the limits are.",
+    date: "2026-09-25",
+    readingTime: "6 min",
+    tag: "Guide",
+    intro:
+      "<strong>In short:</strong> a neural network for interviews is a program that listens to the interviewer's questions via microphone or system audio, recognizes them, and generates an answer on screen in real time. Unlike an ordinary chatbot, you never retype the question manually: everything happens automatically within 3–6 seconds.",
+    sections: [
+      {
+        h2: "How a neural network answers interview questions",
+        body:
+          "<p>The full cycle takes seconds and needs no action from you:</p><ol><li>The program listens to the call — capturing the interviewer's voice.</li><li>It recognizes the question as text (the Whisper model).</li><li>It searches for relevant context in your résumé.</li><li>It sends the request to a language model and streams the answer to the screen.</li></ol><p>You read the gist of the answer and say it in your own words — like with a teleprompter.</p>",
+      },
+      {
+        h2: "How it differs from a chatbot in the browser",
+        body:
+          "<table><thead><tr><th></th><th>Chatbot (ChatGPT etc.)</th><th>Interview neural network</th></tr></thead><tbody><tr><td>How the question gets in</td><td>you retype it manually</td><td>it hears it automatically</td></tr><tr><td>Speed</td><td>30+ seconds of typing</td><td>3–6 seconds</td></tr><tr><td>Résumé context</td><td>needs to be pasted every time</td><td>loaded once</td></tr><tr><td>Privacy</td><td>everything in the cloud</td><td>speech and résumé stay local</td></tr></tbody></table>",
+      },
+      {
+        h2: "What you need to run it",
+        body:
+          "<ul><li>A computer with Windows 10/11 or Linux.</li><li>For speed — an NVIDIA GPU with CUDA; it works without one too, just slower.</li><li>Internet — only for the language model request.</li></ul>",
+      },
+      {
+        h2: "What the neural network won't do for you",
+        body:
+          "<p>It won't pass the interview for you. Personal experience, thinking out loud and code remain your part. The tool removes the stress of a forgotten term and helps structure the answer, but solving tasks and your behaviour in the interview are up to the candidate.</p>",
+      },
+      {
+        h2: "Limits of use",
+        body:
+          "<p>If the interview is proctored and the rules forbid third-party tools, using a neural network is not allowed. On regular calls the decision is yours; the assistant window is hidden by Invisible Mode. Details — <a href=\"/articles/en/proctoring/\">in the proctoring article</a>.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Is there a neural network that answers interview questions by itself?",
+        a: "A fully automatic voice answer is technically possible, but it sounds unnatural and immediately gives the game away. The working scheme is a neural network showing the answer text while you do the talking.",
+      },
+      {
+        q: "Is an interview neural network the same as an interview bot?",
+        a: "Essentially yes — both terms describe an assistant program. The difference is in implementation: quality solutions work as a teleprompter with local speech recognition, not as a chatbot with manual input.",
+      },
+      {
+        q: "Will the employer notice the neural network?",
+        a: "On a regular video call — no, if the window is hidden by Invisible Mode. Under proctoring with third-party tools banned, it must not be used.",
+      },
+      {
+        q: "Is it free?",
+        a: "Mockingbird is a free open source neural network for interviews. You only pay for the language model API if you use a paid provider.",
+      },
+    ],
+  },
+  {
+    slug: "ai-assistant-for-interviews",
+    title: "AI at Interviews: How a Neural Assistant Helps You Pass",
+    description:
+      "How an AI assistant works in an interview: it listens to the question, finds the answer and shows a hint. A look at whether it's legal and how to choose a tool.",
+    date: "2026-09-25",
+    readingTime: "7 min",
+    tag: "Guide",
+    intro:
+      "<strong>In short:</strong> an AI interview assistant is a program that recognizes the interviewer's question in real time and shows a ready answer on screen. It doesn't speak for you — it works like a teleprompter: you see the hint and phrase the answer yourself. The best tools process speech locally and never upload audio to the cloud.",
+    sections: [
+      {
+        h2: "How an AI assistant works in an interview",
+        body:
+          "<p>The process is four steps that take seconds:</p><ol><li>The program captures the other party's audio — system audio or microphone.</li><li>It recognizes the question as text (STT, e.g. <code>faster-whisper</code>).</li><li>It mixes in context from your résumé and sends the request to a language model.</li><li>It shows the answer on screen, often as it is generated (streaming).</li></ol><p>In an interview it looks like this: the interviewer asks a question, and 3–6 seconds later you have a structured answer on your monitor — a definition, an example from practice, key terms.</p>",
+      },
+      {
+        h2: "Why bother if you can prepare in advance",
+        body:
+          "<p>You can't prepare everything in advance. Technical interviews test dozens of topics: from networking and databases to specific tools. Even an experienced specialist doesn't remember every detail by heart, and stress gets in the way of phrasing. An AI assistant doesn't replace knowledge — it removes the mental block and helps recall the structure of an answer.</p>",
+      },
+      {
+        h2: "Is it legal and within the rules?",
+        body:
+          "<p>Using an assistant is everyone's personal decision, but you need to understand the rules of the specific process. Some companies ban any third-party tools and run <strong>proctoring</strong> (screen and behaviour monitoring). Others hold regular calls with no monitoring. The difference is fundamental, so first check the interview format. Details — in the article <a href=\"/articles/en/proctoring/\">“Proctoring”</a>.</p><p>What is definitely wrong: cheating when it is explicitly forbidden. What is fine: using the tool as a trainer and a cheat sheet where the rules don't prohibit it.</p>",
+      },
+      {
+        h2: "How an AI assistant differs from an ordinary neural network",
+        body:
+          "<p>Opening ChatGPT and retyping the question manually is slow and noticeable. An assistant automates the whole path: it listens, recognizes and picks the context by itself. The difference is speed and discretion. That's exactly what makes the tool fit for a live interview.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Do I need an AI assistant if I know the material well?",
+        a: "It doesn't replace knowledge — it relieves anxiety and helps structure the answer. Even strong specialists use it to keep the pace on unfamiliar questions.",
+      },
+      {
+        q: "Does the AI speak for me?",
+        a: "No. Good interview assistants work as a teleprompter: they show the answer text, and you do the talking. That's both more reliable and more natural.",
+      },
+      {
+        q: "Can the employer tell an assistant is being used?",
+        a: "On a regular call — no, if the window is hidden by Invisible Mode. Under proctoring, third-party tools can be detected and banned — check the rules.",
+      },
+      {
+        q: "Do I need internet for the AI assistant to work?",
+        a: "Speech recognition can run offline. Internet is usually only needed for the language model request.",
+      },
+    ],
+  },
+  {
+    slug: "pass-interview-with-ai",
+    title: "How to Pass an Interview with an AI Assistant: Step by Step",
+    description:
+      "Step-by-step instructions: how to prepare and use an AI assistant in an interview — setup, loading your résumé, testing, and working during the interview.",
+    date: "2026-09-25",
+    readingTime: "6 min",
+    tag: "Instructions",
+    intro:
+      "<strong>In short:</strong> to pass an interview with an AI assistant, set up the audio source, load your résumé into the knowledge base and run a test question 10 minutes before the interview. During the interview you read the hints and answer in your own words, making sure the window never gets into screen sharing.",
+    sections: [
+      {
+        h2: "Step 1. Check the interview format",
+        body:
+          "<p>Find out in advance: is it a Zoom/Meet/Teams call, a recording, or proctoring? This determines whether an assistant is appropriate. If the rules ban third-party tools — use it only as a trainer before the interview.</p>",
+      },
+      {
+        h2: "Step 2. Configure the audio source",
+        body:
+          "<p>In the assistant, choose where to take questions from: <strong>system audio</strong> (the interviewer's voice from the call) or the <strong>microphone</strong>. Check the signal level: the indicator should react to speech. How to do this — in the <a href=\"/docs/en/setup/modes/\">“Operating modes”</a> section.</p>",
+      },
+      {
+        h2: "Step 3. Load your résumé into the knowledge base",
+        body:
+          "<p>The PDF résumé becomes the context the model relies on. The more specific the résumé (technologies, projects, numbers), the more precise the answers. The file is processed locally. Details — <a href=\"/docs/en/knowledge-base/\">“Knowledge base”</a>.</p>",
+      },
+      {
+        h2: "Step 4. Run a test pass",
+        body:
+          "<p>Say 2–3 typical questions out loud and check that the draft is recognized correctly and the answer arrives within the expected time (3–6 s on GPU). Make sure <strong>Invisible Mode</strong> is on and the window is not visible when sharing.</p>",
+      },
+      {
+        h2: "Step 5. During the interview",
+        body:
+          "<ol><li>Keep the assistant window on a second monitor or behind the call window.</li><li>Don't read from the screen verbatim — retell in your own words.</li><li>If there's no answer, start with a definition and ask for clarification.</li><li>Watch the latency: if it grows, reduce the model size.</li></ol>",
+      },
+      {
+        h2: "What not to do",
+        body:
+          "<ul><li>Don't use the assistant if the rules explicitly forbid it.</li><li>Don't answer mechanically — it's instantly noticeable and hurts you.</li><li>Don't leave the assistant on during screen sharing without Invisible Mode.</li></ul>",
+      },
+    ],
+    faq: [
+      {
+        q: "How much time does assistant setup take?",
+        a: "About 10 minutes: configure the audio source, load the résumé and run a test question.",
+      },
+      {
+        q: "What if the assistant can't keep up with the interview pace?",
+        a: "Reduce the STT model size so recognition runs faster, or use smaller models. See “Choosing an STT model”.",
+      },
+      {
+        q: "Can I use the assistant in a technical interview with coding?",
+        a: "Yes, it helps with theory and explanations while you write the code yourself. In live coding show your thinking instead of copying a solution.",
+      },
+    ],
+  },
+  {
+    slug: "interview-questions-answers",
+    title: "Interview Questions and Answers: How to Answer with Hints",
+    description:
+      "How to answer interview questions with AI hints: answer structure, typical questions and how not to get lost.",
+    date: "2026-09-25",
+    readingTime: "6 min",
+    tag: "Preparation",
+    intro:
+      "<strong>In short:</strong> interview hints work best as a structure: definition → example from practice → result. The AI assistant suggests the content, while you keep the answer frame in your head. Below — how to answer typical questions and where the assistant helps most.",
+    sections: [
+      {
+        h2: "A universal answer structure",
+        body:
+          "<p>Any technical answer fits into three parts: <strong>the gist</strong> (what it is), <strong>an example</strong> (how you used it), <strong>a takeaway/nuance</strong> (where the pitfalls are). This structure sounds confident and is easy to remember. When the assistant shows an answer, take the gist and the example from it, and add the takeaway yourself.</p>",
+      },
+      {
+        h2: "Typical questions and what to answer",
+        body:
+          "<ul><li><strong>Difference between X and Y</strong> (TCP/UDP, SQL/NoSQL, Docker/VM) — name the comparison criterion first, then the differences.</li><li><strong>How would you design…</strong> — clarify the requirements, propose a scheme, name the trade-offs.</li><li><strong>Tell me about your experience with…</strong> — a specific project, your role, the result in numbers.</li><li><strong>Why did you leave / why us</strong> — motivation without negativity.</li></ul>",
+      },
+      {
+        h2: "How not to get lost",
+        body:
+          "<p>If the answer won't come, buy time with a clarifying question: “Am I right that you're asking about exactly this?”. In the couple of seconds while you speak, the hint has time to appear. That works better than silence.</p>",
+      },
+      {
+        h2: "Where the AI assistant helps",
+        body:
+          "<p>Most of all — on fact- and terminology-heavy questions: definitions, differences, syntax, best practices. Less so on questions about your personal experience — only you have that context. The combo: the assistant gives the facts, you give the personal examples.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Should I read the hint verbatim?",
+        a: "No. Use it as a support: take the gist and adapt it to your experience. Verbatim reading sounds unnatural and is easy to spot.",
+      },
+      {
+        q: "Does AI help with behavioural questions?",
+        a: "Yes, it will suggest the STAR structure (situation, task, action, result), and you add the specifics from your own experience.",
+      },
+      {
+        q: "Can I practise with the assistant beforehand?",
+        a: "Yes, that's the best way: ask questions by voice and answer out loud until the answers sound natural.",
+      },
+    ],
+  },
+  {
+    slug: "proctoring",
+    title: "Proctoring in Interviews: How It Works and Whether You Can Use an Assistant",
+    description:
+      "What proctoring is, how it tracks screen and behaviour, and whether an AI assistant can be used in a proctored interview. How not to break the rules.",
+    date: "2026-09-25",
+    readingTime: "5 min",
+    tag: "Important",
+    intro:
+      "<strong>In short:</strong> proctoring is remote monitoring of an exam or interview: screen recording, webcam, microphone and behaviour analysis. If proctoring is active, third-party AI assistants are usually forbidden and can be detected. Before the interview, always check the rules.",
+    sections: [
+      {
+        h2: "How proctoring works",
+        body:
+          "<ul><li><strong>Screen capture</strong> — recording of everything on your monitor.</li><li><strong>Webcam and microphone</strong> — presence and sound control.</li><li><strong>Behaviour analysis</strong> — eye movement, window switching, foreign processes.</li><li><strong>Lockdown</strong> — some systems forbid launching third-party programs during the session.</li></ul>",
+      },
+      {
+        h2: "Can you use an assistant under proctoring",
+        body:
+          "<p>As a rule — no. If the rules explicitly forbid third-party tools, using an assistant is a violation regardless of whether it is technically detected. That risks your result being cancelled and reputational consequences. We recommend the assistant as a <strong>preparation tool</strong>, not a way around proctoring.</p>",
+      },
+      {
+        h2: "How to tell there will be proctoring",
+        body:
+          "<p>Signs: you're asked to install separate software, share your screen for the whole session, turn on the camera showing the room, or are warned about recording. If in doubt — ask the recruiter directly.</p>",
+      },
+      {
+        h2: "What to do when the rules allow it",
+        body:
+          "<p>Many regular calls involve no proctoring. There the assistant is appropriate if <strong>Invisible Mode</strong> is on and you answer in your own words. Details — <a href=\"/articles/en/privacy-invisible-mode/\">“Invisible Mode”</a>.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Does proctoring notice a second window on screen?",
+        a: "Yes — with full screen capture, all open windows and processes can be visible. Invisible Mode hides the window from capture, but doesn't cancel a rule ban.",
+      },
+      {
+        q: "Is using an AI assistant in an interview legal at all?",
+        a: "Neural networks as such aren't prohibited by law. The restrictions come from the employer and the rules of the specific process — those are what you must follow.",
+      },
+      {
+        q: "What happens if proctoring detects an assistant?",
+        a: "It depends on the rules: from the result being voided to rejection. That's why we advise against using the assistant where it is banned.",
+      },
+    ],
+  },
+  {
+    slug: "teleprompter",
+    title: "A Teleprompter for Interviews: What It Is and How It Works",
+    description:
+      "A teleprompter for interviews: how an AI assistant shows answer text invisibly to the other party and how it differs from a classic prompter.",
+    date: "2026-09-25",
+    readingTime: "4 min",
+    tag: "Technology",
+    intro:
+      "<strong>In short:</strong> an interview teleprompter is a program that recognizes the interviewer's questions and shows answer text on screen in real time, like a TV prompter. Unlike a classic teleprompter, the text isn't written in advance — a language model generates it for the specific question.",
+    sections: [
+      {
+        h2: "How it differs from a classic teleprompter",
+        body:
+          "<p>A teleprompter shows a pre-written script. An AI teleprompter for interviews generates the answer on the fly: it hears the question, searches your résumé for context and writes the answer. Preparing a script in advance is impossible for an interview — questions are unpredictable.</p>",
+      },
+      {
+        h2: "What it looks like in action",
+        body:
+          "<p>The answer window is usually placed on a second monitor or on top of the call. The text appears gradually (streaming) while you speak. In Invisible Mode the window never gets into screen sharing or recordings.</p>",
+      },
+      {
+        h2: "Why it's called an “assistant”, not a “prompter”",
+        body:
+          "<p>Because the task is not to dictate for you but to help recall and structure. You read the meaning and say it in your own words. This keeps the answer natural.</p>",
+      },
+      {
+        h2: "Who it suits",
+        body:
+          "<ul><li>Candidates for technical and analytical positions.</li><li>People who get very nervous and lose the structure of answers.</li><li>Specialists who need to refresh a wide tech stack.</li></ul>",
+      },
+    ],
+    faq: [
+      {
+        q: "Is it the same as a prompter?",
+        a: "Close in meaning, but a classic prompter shows pre-written text while an AI teleprompter generates the answer in real time for the specific question.",
+      },
+      {
+        q: "Can I type answers in advance?",
+        a: "You can, but it misses the point: interview questions are unpredictable. Auto-generation based on your résumé works better.",
+      },
+      {
+        q: "Is the teleprompter visible during screen sharing?",
+        a: "Depends on the program. Mockingbird has Invisible Mode that excludes the window from screen capture.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-choose-assistant",
+    title: "How to Choose an AI Interview Assistant: 6 Criteria",
+    description:
+      "How to choose an interview assistant: local processing, speech recognition accuracy, latency, privacy, platforms and price. Checklist.",
+    date: "2026-09-24",
+    dateModified: "2026-09-25",
+    readingTime: "6 min",
+    tag: "Guide",
+    intro:
+      "<strong>In short:</strong> a good AI interview assistant runs locally, recognizes speech in real time, answers within 3–6 seconds and never sends your data to the cloud. If a tool requires constant internet or uploads audio to a server, that's a risk both for privacy and stability.",
+    sections: [
+      {
+        h2: "1. Speech processing: local or cloud",
+        body:
+          "<p>This is the main criterion. Cloud services send your voice to someone else's servers — latency, internet dependency, potential leaks. Local recognition runs on your computer. Details — <a href=\"/articles/en/offline-vs-cloud-stt/\">“Offline or cloud”</a>.</p>",
+      },
+      {
+        h2: "2. Accuracy and language support",
+        body:
+          "<ul><li>Is your language properly supported.</li><li>How the model handles technical terms.</li><li>Whether there's phonetic term correction.</li><li>Whether you can change the model size.</li></ul>",
+      },
+      {
+        h2: "3. Answer latency",
+        body:
+          "<p>The comfortable threshold is 3–6 seconds from the end of the question. Longer than that and the conversation loses pace. Model analysis — <a href=\"/articles/en/whisper-large-v3-turbo/\">“Why large-v3-turbo”</a>.</p>",
+      },
+      {
+        h2: "4. Privacy and discretion",
+        body:
+          "<p>Must-haves: Invisible Mode, one-action mute, no intrusive telemetry. How it works — <a href=\"/articles/en/privacy-invisible-mode/\">“Invisible Mode”</a>.</p>",
+      },
+      {
+        h2: "5. Platform and easy installation",
+        body:
+          "<p>You need builds for Windows and Linux, a simple installer or a single file, clear updates and a changelog.</p>",
+      },
+      {
+        h2: "6. Cost and openness",
+        body:
+          "<p>Open source means transparency: you can see what goes to the network. Free without subscriptions removes the risk of losing access at the wrong moment.</p>",
+      },
+      {
+        h2: "Selection checklist",
+        body:
+          "<table><thead><tr><th>Criterion</th><th>Good</th><th>Bad</th></tr></thead><tbody><tr><td>Speech processing</td><td>local</td><td>cloud only</td></tr><tr><td>Latency</td><td>3–6 s</td><td>&gt; 10 s</td></tr><tr><td>Privacy</td><td>Invisible Mode</td><td>audio on a server</td></tr><tr><td>Platforms</td><td>Windows + Linux</td><td>web only</td></tr><tr><td>Cost</td><td>free / open source</td><td>subscription</td></tr></tbody></table>",
+      },
+    ],
+    faq: [
+      {
+        q: "What matters most when choosing?",
+        a: "Local speech processing. It determines privacy, latency and internet independence all at once.",
+      },
+      {
+        q: "Is it worth paying for an assistant?",
+        a: "There are free open source solutions that fully cover the tasks. Paying only makes sense for unique features.",
+      },
+      {
+        q: "Are built-in browser AI features enough?",
+        a: "For interviews — no: they don't recognize speech in real time and don't mix in résumé context.",
+      },
+    ],
+  },
+  {
+    slug: "offline-vs-cloud-stt",
+    title: "Offline or Cloud: Where to Process Speech in an Interview",
+    description:
+      "Comparing local and cloud speech recognition: privacy, latency, cost, internet dependency and data leak risks.",
+    date: "2026-09-24",
+    dateModified: "2026-09-25",
+    readingTime: "5 min",
+    tag: "Analysis",
+    intro:
+      "<strong>In short:</strong> for interviews, local speech recognition is preferable — it doesn't send your voice to a server, works without internet and gives predictable latency. The cloud is justified only if your computer is very weak.",
+    sections: [
+      {
+        h2: "Privacy",
+        body:
+          "<p>In an interview you say questions and reasoning out loud. Sending that to someone else's server means depending on their storage policy. Offline eliminates the risk by definition.</p>",
+      },
+      {
+        h2: "Latency",
+        body:
+          "<ul><li>Cloud: network transfer + queue + processing — latency fluctuates.</li><li>Offline on GPU: a stable <strong>3–6 seconds</strong>.</li></ul>",
+      },
+      {
+        h2: "Internet dependency",
+        body:
+          "<p>Wi-Fi drops mid-interview — a cloud assistant stops working. Offline keeps recognizing speech.</p>",
+      },
+      {
+        h2: "Cost",
+        body:
+          "<p>Cloud STT APIs charge per minute of audio. An offline model is downloaded once and works without limits.</p>",
+      },
+      {
+        h2: "Comparison",
+        body:
+          "<table><thead><tr><th>Criterion</th><th>Offline</th><th>Cloud</th></tr></thead><tbody><tr><td>Audio leak</td><td>impossible</td><td>depends on the provider</td></tr><tr><td>Latency</td><td>3–6 s (GPU)</td><td>fluctuating</td></tr><tr><td>Internet</td><td>not needed</td><td>required</td></tr><tr><td>Cost</td><td>zero</td><td>per minute</td></tr><tr><td>PC requirements</td><td>some (GPU recommended)</td><td>minimal</td></tr></tbody></table>",
+      },
+      {
+        h2: "Conclusion",
+        body:
+          "<p>For a technical interview the priorities are privacy and stability, so offline wins. That's exactly how <a href=\"https://github.com/Mockingbird-go-on/mockingbird/releases\" target=\"_blank\" rel=\"noopener\">Mockingbird</a> is built: speech, résumé and the knowledge base are processed locally; only the LLM request goes out.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Can speech be recognized without internet?",
+        a: "Yes, local faster-whisper models run fully offline. Internet is only needed for the language model request.",
+      },
+      {
+        q: "Is cloud recognition more accurate?",
+        a: "Not necessarily. Local large-v3-turbo models match cloud accuracy, especially on technical vocabulary.",
+      },
+      {
+        q: "What goes to the cloud while the assistant runs?",
+        a: "In Mockingbird — only the LLM request text. Audio, résumé and knowledge base stay on your device.",
+      },
+    ],
+  },
+  {
+    slug: "whisper-large-v3-turbo",
+    title: "Why faster-whisper large-v3-turbo Is the Optimal Model for Interviews",
+    description:
+      "An analysis of the large-v3-turbo speech recognition model: accuracy, speed, GPU requirements and comparison with small/medium/large-v3.",
+    date: "2026-09-24",
+    dateModified: "2026-09-25",
+    readingTime: "6 min",
+    tag: "Technology",
+    intro:
+      "<strong>In short:</strong> <code>large-v3-turbo</code> in <code>faster-whisper</code> delivers nearly the maximum accuracy of <code>large-v3</code> but noticeably faster — the optimal balance for real time. Smaller models lose on technical vocabulary.",
+    sections: [
+      {
+        h2: "What faster-whisper is",
+        body:
+          "<p>An optimized Whisper implementation on CTranslate2. Faster than the original at the same quality, supports GPU via CUDA. In Mockingbird, recognition runs locally.</p>",
+      },
+      {
+        h2: "Why turbo",
+        body:
+          "<ul><li><strong>Speed.</strong> Turbo reduces the number of decoding steps.</li><li><strong>Accuracy.</strong> Quality is close to large-v3.</li><li><strong>Real time.</strong> It keeps up with speech as it arrives.</li></ul>",
+      },
+      {
+        h2: "Model comparison",
+        body:
+          "<table><thead><tr><th>Model</th><th>Accuracy</th><th>Speed</th><th>When to choose</th></tr></thead><tbody><tr><td><code>tiny</code> / <code>base</code></td><td>low</td><td>very high</td><td>CPU only</td></tr><tr><td><code>small</code> / <code>medium</code></td><td>medium</td><td>high</td><td>weak GPU</td></tr><tr><td><code>large-v3-turbo</code></td><td>high</td><td>high</td><td>CUDA GPU (recommended)</td></tr><tr><td><code>large-v3</code></td><td>maximum</td><td>lower</td><td>strong GPU</td></tr></tbody></table>",
+      },
+      {
+        h2: "Languages and terms",
+        body:
+          "<p>Whisper is multilingual and works confidently across languages. Larger models recognize technical terms better, and phonetic correction (e.g. “Zabix” → “Zabbix”) runs on top.</p>",
+      },
+      {
+        h2: "Conclusion",
+        body:
+          "<p>If you have a GPU — start with <code>large-v3-turbo</code>. Not enough resources — move down the table. Instructions — in the <a href=\"/docs/en/setup/stt-model/\">documentation</a>.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Which model is best for my language?",
+        a: "large-v3-turbo gives a good balance. For maximum accuracy with no speed constraints — large-v3.",
+      },
+      {
+        q: "How much video memory do I need?",
+        a: "It depends on the model. For large-v3-turbo, 6 GB or more is desirable; if it's short, the app switches to CPU.",
+      },
+      {
+        q: "Can it run without a graphics card?",
+        a: "Yes, but recognition will be slower. An NVIDIA GPU with CUDA is recommended for fast operation.",
+      },
+    ],
+  },
+  {
+    slug: "privacy-invisible-mode",
+    title: "Invisible Mode: How to Hide the Assistant During Screen Sharing",
+    description:
+      "How Invisible Mode excludes the AI assistant window from recording, streaming and screen sharing, and what else protects your privacy in an interview.",
+    date: "2026-09-24",
+    dateModified: "2026-09-25",
+    readingTime: "4 min",
+    tag: "Privacy",
+    intro:
+      "<strong>In short:</strong> Invisible Mode excludes the assistant window from screen capture. During sharing, streaming or recording, viewers see only your desktop, while the hints stay on your monitor.",
+    sections: [
+      {
+        h2: "Why you need it",
+        body:
+          "<p>In interviews you're often asked to share your screen, or the session is recorded. Any hint in frame exposes the tool. Invisible Mode removes that risk.</p>",
+      },
+      {
+        h2: "How it works",
+        body:
+          "<ul><li>The window is marked as excluded from capture using OS-level facilities.</li><li>When sharing the screen, a window or a region, the hints never get into the picture.</li><li>Recording and streaming capture only the other windows.</li></ul><p>On your physical monitor the hints look completely normal.</p>",
+      },
+      {
+        h2: "When to enable it",
+        body:
+          "<ul><li>Before a Zoom / Meet / Teams call where sharing is possible.</li><li>If the interview is recorded.</li><li>If you're streaming the process.</li></ul>",
+      },
+      {
+        h2: "What else protects your privacy",
+        body:
+          "<ul><li>Local speech processing — your voice never leaves the computer.</li><li>The résumé is processed on the device.</li><li>Only the LLM request text goes out.</li></ul>",
+      },
+      {
+        h2: "Checking that it works",
+        body:
+          "<ol><li>Enable Invisible Mode.</li><li>Start sharing and open the preview.</li><li>Make sure the assistant window is absent from the preview.</li></ol><p>Details — in the <a href=\"/docs/en/setup/modes/\">“Operating modes”</a> section.</p>",
+      },
+    ],
+    faq: [
+      {
+        q: "Is the window visible in an interview recording?",
+        a: "No — with Invisible Mode on, the window is excluded from capture and never gets into recordings or streams.",
+      },
+      {
+        q: "Does the mode work in every program?",
+        a: "In most capture systems — yes. After capture-tool updates it's worth re-checking.",
+      },
+      {
+        q: "If proctoring bans third-party tools, will Invisible Mode help?",
+        a: "It can hide the window, but it doesn't cancel the ban. Where the rules forbid an assistant, it must not be used.",
+      },
+    ],
+  },
+];
+
+export const byDateEn = [...articlesEn].sort((a, b) => (a.date < b.date ? 1 : -1));

@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           rm -rf _site
           mkdir -p _site
-          for item in index.html en assets robots.txt llms.txt sitemap.xml landing-sitemap.xml CNAME .nojekyll docs articles; do
+          for item in index.html en assets robots.txt llms.txt llms-full.txt sitemap.xml landing-sitemap.xml CNAME .nojekyll docs articles; do
             if [ -e "$item" ]; then
               cp -r "$item" _site/
             fi

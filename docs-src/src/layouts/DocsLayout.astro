@@ -34,6 +34,9 @@ const langRedirect = `
   if(localStorage.getItem('mb-lang'))return;
   var pref=(navigator.language||'').toLowerCase().startsWith('en')?'en':'ru';
   if(pref==='${locale}')return;
+  var ref=document.referrer||'';
+  /* зашёл по внутренней ссылке — не перебрасываем */
+  if(ref && ref.indexOf(location.origin)===0)return;
   var base=location.pathname.replace(/\\/+$/,'');
   var target = base${locale === "ru" ? " + '/en/'" : ".replace(/\\/en$/,'') + '/'"};
   location.replace(target);

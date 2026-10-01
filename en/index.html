@@ -14,6 +14,7 @@
 <link rel="alternate" hreflang="x-default" href="https://mocking.ru/">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
 <link rel="icon" type="image/png" href="/assets/img/favicon.png">
 
 <!-- Open Graph -->
@@ -22,10 +23,10 @@
 <meta property="og:title" content="Mockingbird — AI Interview Assistant">
 <meta property="og:description" content="Recognizes questions locally and shows answers in real time. Speech and résumé never leave your computer. Invisible Mode. Windows and Linux, open source.">
 <meta property="og:url" content="https://mocking.ru/en/">
-<meta property="og:image" content="https://mocking.ru/assets/img/og.jpg">
+<meta property="og:image" content="https://mocking.ru/assets/img/og-en.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mockingbird — AI interview assistant. Newspaper collage: torn cutouts, an app screenshot, an open source stamp.">
+<meta property="og:image:alt" content="Mockingbird — AI interview assistant. Newspaper collage: open source stamp, key facts, site URL.">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="ru_RU">
 
@@ -33,7 +34,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mockingbird — AI Interview Assistant">
 <meta name="twitter:description" content="Local speech recognition, a knowledge base built from your résumé, real-time answers. Invisible Mode. Open source.">
-<meta name="twitter:image" content="https://mocking.ru/assets/img/og.jpg">
+<meta name="twitter:image" content="https://mocking.ru/assets/img/og-en.jpg">
 
 <!-- schema.org -->
 <script type="application/ld+json">
@@ -94,10 +95,21 @@
 <link rel="preload" href="/assets/fonts/Kholodos.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
 <script>
+/* Мягкий автодетект: если язык браузера не EN и пользователь не выбирал язык —
+   показываем баннер, но не выкидываем со страницы */
 (function(){try{
-  if(!localStorage.getItem('mb-lang') && !(navigator.language||'').toLowerCase().startsWith('en')){
-    location.replace('/');
-  }
+  if(localStorage.getItem('mb-lang'))return;
+  if((navigator.language||'').toLowerCase().startsWith('en'))return;
+  /* пришёл по внутренней ссылке или закладке на EN — не дёргаем */
+  var ref=document.referrer||'';
+  if(ref && ref.indexOf(location.origin)===0 && ref!==(location.origin+'/en/'))return;
+  setTimeout(function(){
+    var b=document.createElement('div');
+    b.innerHTML='<a href="/" style="display:inline-block;padding:6px 14px;font:600 13px/1 monospace;letter-spacing:.08em;color:var(--paper,inherit);background:#1a1712;border:1.5px solid #1a1712;border-radius:2px;text-decoration:none;transform:rotate(-1deg)">↗ Русская версия</a>';
+    b.style.cssText='position:fixed;left:14px;bottom:14px;z-index:999';
+    document.body.appendChild(b);
+    setTimeout(function(){b.remove()},15000);
+  },800);
 }catch(e){}})();
 </script>
 </head>

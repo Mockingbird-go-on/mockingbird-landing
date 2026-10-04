@@ -51,7 +51,7 @@ export const hubQuestionsEn: HubQuestionEn[] = [
   },
   {
     q: "What's the latency from question to answer?",
-    a: "On a GPU with CUDA — about 3–6 seconds. On CPU it's longer, so an NVIDIA card is recommended for comfortable use.",
+    a: "On a GPU with CUDA — about 2–5 seconds. On CPU it's longer, so an NVIDIA card is recommended for comfortable use.",
     link: { href: "/docs/en/setup/stt-model/", label: "Choosing a model" },
   },
   {
@@ -70,7 +70,7 @@ export const hubQuestionsEn: HubQuestionEn[] = [
   },
   {
     q: "Is there an interview bot that helps answer?",
-    a: "Yes, but full-fledged solutions aren't chatbots with manual input — they're programs with automatic speech recognition: they hear the question themselves and show the answer in 3–6 seconds.",
+    a: "Yes, but full-fledged solutions aren't chatbots with manual input — they're programs with automatic speech recognition: they hear the question themselves and show the answer in 2–5 seconds.",
     link: { href: "/articles/en/neural-network-for-interview/", label: "How it works" },
   },
   {

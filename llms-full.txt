@@ -3,7 +3,7 @@
 > Mockingbird is a free, open source desktop AI interview assistant for Windows
 > and Linux. It listens to the interviewer's questions, recognizes speech locally
 > with faster-whisper (large-v3-turbo), mixes in context from a PDF résumé
-> knowledge base and streams LLM answers to the screen in ~3–6 seconds. Speech,
+> knowledge base and streams LLM answers to the screen in ~2–5 seconds. Speech,
 > résumé and knowledge base are processed on the user's computer; only the LLM
 > request text leaves the machine. Site: https://mocking.ru/ (RU) /
 > https://mocking.ru/en/ (EN).
@@ -20,7 +20,7 @@
 
 voice → VAD (Silero, adaptive) → whisper (faster-whisper, local) → knowledge base retrieval (PDF résumé chunks) → LLM (streamed answer, single-flight priority) → on-screen hint.
 
-Typical latency: ~3–6 s from the end of the question to the start of the answer on an NVIDIA GPU with CUDA; slower on CPU (automatic fallback).
+Typical latency: ~2–5 s from the end of the question to the start of the answer on an NVIDIA GPU with CUDA; slower on CPU (automatic fallback).
 
 ## Features
 

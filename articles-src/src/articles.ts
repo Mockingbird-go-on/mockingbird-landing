@@ -31,7 +31,7 @@ export const articles: Article[] = [
     readingTime: "6 мин",
     tag: "Гайд",
     intro:
-      "<strong>Коротко:</strong> нейросеть для собеседования — это программа, которая слушает вопросы интервьюера через микрофон или системный звук, распознаёт их и в реальном времени генерирует ответ на экране. В отличие от обычного чат-бота, ей не нужно вручную перепечатывать вопрос: всё происходит автоматически за 3–6 секунд.",
+      "<strong>Коротко:</strong> нейросеть для собеседования — это программа, которая слушает вопросы интервьюера через микрофон или системный звук, распознаёт их и в реальном времени генерирует ответ на экране. В отличие от обычного чат-бота, ей не нужно вручную перепечатывать вопрос: всё происходит автоматически за 2–5 секунд.",
     sections: [
       {
         h2: "Как нейросеть отвечает на вопросы собеседования",
@@ -41,7 +41,7 @@ export const articles: Article[] = [
       {
         h2: "Чем отличается от чат-бота в браузере",
         body:
-          "<table><thead><tr><th></th><th>Чат-бот (ChatGPT и др.)</th><th>Нейросеть для собеседования</th></tr></thead><tbody><tr><td>Как попадает вопрос</td><td>вручную перепечатываете</td><td>слышит автоматически</td></tr><tr><td>Скорость</td><td>30+ секунд на печать</td><td>3–6 секунд</td></tr><tr><td>Контекст резюме</td><td>нужно копировать каждый раз</td><td>загружается один раз</td></tr><tr><td>Приватность</td><td>всё в облаке</td><td>речь и резюме локально</td></tr></tbody></table>",
+          "<table><thead><tr><th></th><th>Чат-бот (ChatGPT и др.)</th><th>Нейросеть для собеседования</th></tr></thead><tbody><tr><td>Как попадает вопрос</td><td>вручную перепечатываете</td><td>слышит автоматически</td></tr><tr><td>Скорость</td><td>30+ секунд на печать</td><td>2–5 секунд</td></tr><tr><td>Контекст резюме</td><td>нужно копировать каждый раз</td><td>загружается один раз</td></tr><tr><td>Приватность</td><td>всё в облаке</td><td>речь и резюме локально</td></tr></tbody></table>",
       },
       {
         h2: "Что нужно для работы",
@@ -92,7 +92,7 @@ export const articles: Article[] = [
       {
         h2: "Как ИИ-помощник работает на собеседовании",
         body:
-          "<p>Процесс состоит из четырёх шагов, которые занимают секунды:</p><ol><li>Программа захватывает звук собеседника — системный звук или микрофон.</li><li>Распознаёт вопрос в текст (STT, например <code>faster-whisper</code>).</li><li>Подмешивает контекст из вашего резюме и передаёт запрос языковой модели.</li><li>Показывает ответ на экране, часто по мере генерации (стриминг).</li></ol><p>На собеседовании это выглядит так: интервьюер задаёт вопрос, а через 3–6 секунд у вас на мониторе уже есть структурированный ответ — определение, пример из практики, ключевые термины.</p>",
+          "<p>Процесс состоит из четырёх шагов, которые занимают секунды:</p><ol><li>Программа захватывает звук собеседника — системный звук или микрофон.</li><li>Распознаёт вопрос в текст (STT, например <code>faster-whisper</code>).</li><li>Подмешивает контекст из вашего резюме и передаёт запрос языковой модели.</li><li>Показывает ответ на экране, часто по мере генерации (стриминг).</li></ol><p>На собеседовании это выглядит так: интервьюер задаёт вопрос, а через 2–5 секунд у вас на мониторе уже есть структурированный ответ — определение, пример из практики, ключевые термины.</p>",
       },
       {
         h2: "Зачем это нужно, если можно подготовиться заранее",
@@ -158,7 +158,7 @@ export const articles: Article[] = [
       {
         h2: "Шаг 4. Сделайте тестовый прогон",
         body:
-          "<p>Задайте вслух 2–3 типичных вопроса и проверьте, что черновик распознаётся корректно, а ответ приходит за ожидаемое время (3–6 с на GPU). Убедитесь, что включён <strong>режим Невидимка</strong> и окно не видно при шаринге.</p>",
+          "<p>Задайте вслух 2–3 типичных вопроса и проверьте, что черновик распознаётся корректно, а ответ приходит за ожидаемое время (2–5 с на GPU). Убедитесь, что включён <strong>режим Невидимка</strong> и окно не видно при шаринге.</p>",
       },
       {
         h2: "Шаг 5. Во время интервью",
@@ -337,7 +337,7 @@ export const articles: Article[] = [
     readingTime: "6 мин",
     tag: "Гайд",
     intro:
-      "<strong>Коротко:</strong> хороший ИИ-помощник для собеседований работает локально, распознаёт речь в реальном времени, отвечает за 3–6 секунд и не отправляет данные в облако. Если инструмент требует постоянного интернета или грузит аудио на сервер — это риск и для приватности, и для стабильности.",
+      "<strong>Коротко:</strong> хороший ИИ-помощник для собеседований работает локально, распознаёт речь в реальном времени, отвечает за 2–5 секунд и не отправляет данные в облако. Если инструмент требует постоянного интернета или грузит аудио на сервер — это риск и для приватности, и для стабильности.",
     sections: [
       {
         h2: "1. Обработка речи: локально или в облаке",
@@ -352,7 +352,7 @@ export const articles: Article[] = [
       {
         h2: "3. Задержка ответа",
         body:
-          "<p>Комфортный порог — 3–6 секунд от конца вопроса. Дольше — теряется темп разговора. Разбор моделей — <a href=\"/articles/whisper-large-v3-turbo/\">«Почему large-v3-turbo»</a>.</p>",
+          "<p>Комфортный порог — 2–5 секунд от конца вопроса. Дольше — теряется темп разговора. Разбор моделей — <a href=\"/articles/whisper-large-v3-turbo/\">«Почему large-v3-turbo»</a>.</p>",
       },
       {
         h2: "4. Приватность и незаметность",
@@ -372,7 +372,7 @@ export const articles: Article[] = [
       {
         h2: "Чек-лист выбора",
         body:
-          "<table><thead><tr><th>Критерий</th><th>Хорошо</th><th>Плохо</th></tr></thead><tbody><tr><td>Обработка речи</td><td>локально</td><td>только облако</td></tr><tr><td>Задержка</td><td>3–6 с</td><td>&gt; 10 с</td></tr><tr><td>Приватность</td><td>режим Невидимка</td><td>аудио на сервере</td></tr><tr><td>Платформы</td><td>Windows + Linux</td><td>только веб</td></tr><tr><td>Стоимость</td><td>бесплатно / open source</td><td>подписка</td></tr></tbody></table>",
+          "<table><thead><tr><th>Критерий</th><th>Хорошо</th><th>Плохо</th></tr></thead><tbody><tr><td>Обработка речи</td><td>локально</td><td>только облако</td></tr><tr><td>Задержка</td><td>2–5 с</td><td>&gt; 10 с</td></tr><tr><td>Приватность</td><td>режим Невидимка</td><td>аудио на сервере</td></tr><tr><td>Платформы</td><td>Windows + Linux</td><td>только веб</td></tr><tr><td>Стоимость</td><td>бесплатно / open source</td><td>подписка</td></tr></tbody></table>",
       },
     ],
     faq: [
@@ -410,7 +410,7 @@ export const articles: Article[] = [
       {
         h2: "Задержка",
         body:
-          "<ul><li>Облако: сетевая передача + очередь + обработка — задержка плавает.</li><li>Офлайн на GPU: стабильные <strong>3–6 секунд</strong>.</li></ul>",
+          "<ul><li>Облако: сетевая передача + очередь + обработка — задержка плавает.</li><li>Офлайн на GPU: стабильные <strong>2–5 секунд</strong>.</li></ul>",
       },
       {
         h2: "Зависимость от интернета",
@@ -425,7 +425,7 @@ export const articles: Article[] = [
       {
         h2: "Сравнение",
         body:
-          "<table><thead><tr><th>Критерий</th><th>Офлайн</th><th>Облако</th></tr></thead><tbody><tr><td>Утечка аудио</td><td>невозможна</td><td>зависит от провайдера</td></tr><tr><td>Задержка</td><td>3–6 с (GPU)</td><td>плавающая</td></tr><tr><td>Интернет</td><td>не нужен</td><td>обязателен</td></tr><tr><td>Стоимость</td><td>ноль</td><td>за минуты</td></tr><tr><td>Требования к ПК</td><td>есть (GPU желателен)</td><td>минимальные</td></tr></tbody></table>",
+          "<table><thead><tr><th>Критерий</th><th>Офлайн</th><th>Облако</th></tr></thead><tbody><tr><td>Утечка аудио</td><td>невозможна</td><td>зависит от провайдера</td></tr><tr><td>Задержка</td><td>2–5 с (GPU)</td><td>плавающая</td></tr><tr><td>Интернет</td><td>не нужен</td><td>обязателен</td></tr><tr><td>Стоимость</td><td>ноль</td><td>за минуты</td></tr><tr><td>Требования к ПК</td><td>есть (GPU желателен)</td><td>минимальные</td></tr></tbody></table>",
       },
       {
         h2: "Вывод",
@@ -575,7 +575,7 @@ export const articlesEn: Article[] = [
     readingTime: "6 min",
     tag: "Guide",
     intro:
-      "<strong>In short:</strong> a neural network for interviews is a program that listens to the interviewer's questions via microphone or system audio, recognizes them, and generates an answer on screen in real time. Unlike an ordinary chatbot, you never retype the question manually: everything happens automatically within 3–6 seconds.",
+      "<strong>In short:</strong> a neural network for interviews is a program that listens to the interviewer's questions via microphone or system audio, recognizes them, and generates an answer on screen in real time. Unlike an ordinary chatbot, you never retype the question manually: everything happens automatically within 2–5 seconds.",
     sections: [
       {
         h2: "How a neural network answers interview questions",
@@ -585,7 +585,7 @@ export const articlesEn: Article[] = [
       {
         h2: "How it differs from a chatbot in the browser",
         body:
-          "<table><thead><tr><th></th><th>Chatbot (ChatGPT etc.)</th><th>Interview neural network</th></tr></thead><tbody><tr><td>How the question gets in</td><td>you retype it manually</td><td>it hears it automatically</td></tr><tr><td>Speed</td><td>30+ seconds of typing</td><td>3–6 seconds</td></tr><tr><td>Résumé context</td><td>needs to be pasted every time</td><td>loaded once</td></tr><tr><td>Privacy</td><td>everything in the cloud</td><td>speech and résumé stay local</td></tr></tbody></table>",
+          "<table><thead><tr><th></th><th>Chatbot (ChatGPT etc.)</th><th>Interview neural network</th></tr></thead><tbody><tr><td>How the question gets in</td><td>you retype it manually</td><td>it hears it automatically</td></tr><tr><td>Speed</td><td>30+ seconds of typing</td><td>2–5 seconds</td></tr><tr><td>Résumé context</td><td>needs to be pasted every time</td><td>loaded once</td></tr><tr><td>Privacy</td><td>everything in the cloud</td><td>speech and résumé stay local</td></tr></tbody></table>",
       },
       {
         h2: "What you need to run it",
@@ -636,7 +636,7 @@ export const articlesEn: Article[] = [
       {
         h2: "How an AI assistant works in an interview",
         body:
-          "<p>The process is four steps that take seconds:</p><ol><li>The program captures the other party's audio — system audio or microphone.</li><li>It recognizes the question as text (STT, e.g. <code>faster-whisper</code>).</li><li>It mixes in context from your résumé and sends the request to a language model.</li><li>It shows the answer on screen, often as it is generated (streaming).</li></ol><p>In an interview it looks like this: the interviewer asks a question, and 3–6 seconds later you have a structured answer on your monitor — a definition, an example from practice, key terms.</p>",
+          "<p>The process is four steps that take seconds:</p><ol><li>The program captures the other party's audio — system audio or microphone.</li><li>It recognizes the question as text (STT, e.g. <code>faster-whisper</code>).</li><li>It mixes in context from your résumé and sends the request to a language model.</li><li>It shows the answer on screen, often as it is generated (streaming).</li></ol><p>In an interview it looks like this: the interviewer asks a question, and 2–5 seconds later you have a structured answer on your monitor — a definition, an example from practice, key terms.</p>",
       },
       {
         h2: "Why bother if you can prepare in advance",
@@ -702,7 +702,7 @@ export const articlesEn: Article[] = [
       {
         h2: "Step 4. Run a test pass",
         body:
-          "<p>Say 2–3 typical questions out loud and check that the draft is recognized correctly and the answer arrives within the expected time (3–6 s on GPU). Make sure <strong>Invisible Mode</strong> is on and the window is not visible when sharing.</p>",
+          "<p>Say 2–3 typical questions out loud and check that the draft is recognized correctly and the answer arrives within the expected time (2–5 s on GPU). Make sure <strong>Invisible Mode</strong> is on and the window is not visible when sharing.</p>",
       },
       {
         h2: "Step 5. During the interview",
@@ -881,7 +881,7 @@ export const articlesEn: Article[] = [
     readingTime: "6 min",
     tag: "Guide",
     intro:
-      "<strong>In short:</strong> a good AI interview assistant runs locally, recognizes speech in real time, answers within 3–6 seconds and never sends your data to the cloud. If a tool requires constant internet or uploads audio to a server, that's a risk both for privacy and stability.",
+      "<strong>In short:</strong> a good AI interview assistant runs locally, recognizes speech in real time, answers within 2–5 seconds and never sends your data to the cloud. If a tool requires constant internet or uploads audio to a server, that's a risk both for privacy and stability.",
     sections: [
       {
         h2: "1. Speech processing: local or cloud",
@@ -896,7 +896,7 @@ export const articlesEn: Article[] = [
       {
         h2: "3. Answer latency",
         body:
-          "<p>The comfortable threshold is 3–6 seconds from the end of the question. Longer than that and the conversation loses pace. Model analysis — <a href=\"/articles/en/whisper-large-v3-turbo/\">“Why large-v3-turbo”</a>.</p>",
+          "<p>The comfortable threshold is 2–5 seconds from the end of the question. Longer than that and the conversation loses pace. Model analysis — <a href=\"/articles/en/whisper-large-v3-turbo/\">“Why large-v3-turbo”</a>.</p>",
       },
       {
         h2: "4. Privacy and discretion",
@@ -916,7 +916,7 @@ export const articlesEn: Article[] = [
       {
         h2: "Selection checklist",
         body:
-          "<table><thead><tr><th>Criterion</th><th>Good</th><th>Bad</th></tr></thead><tbody><tr><td>Speech processing</td><td>local</td><td>cloud only</td></tr><tr><td>Latency</td><td>3–6 s</td><td>&gt; 10 s</td></tr><tr><td>Privacy</td><td>Invisible Mode</td><td>audio on a server</td></tr><tr><td>Platforms</td><td>Windows + Linux</td><td>web only</td></tr><tr><td>Cost</td><td>free / open source</td><td>subscription</td></tr></tbody></table>",
+          "<table><thead><tr><th>Criterion</th><th>Good</th><th>Bad</th></tr></thead><tbody><tr><td>Speech processing</td><td>local</td><td>cloud only</td></tr><tr><td>Latency</td><td>2–5 s</td><td>&gt; 10 s</td></tr><tr><td>Privacy</td><td>Invisible Mode</td><td>audio on a server</td></tr><tr><td>Platforms</td><td>Windows + Linux</td><td>web only</td></tr><tr><td>Cost</td><td>free / open source</td><td>subscription</td></tr></tbody></table>",
       },
     ],
     faq: [
@@ -954,7 +954,7 @@ export const articlesEn: Article[] = [
       {
         h2: "Latency",
         body:
-          "<ul><li>Cloud: network transfer + queue + processing — latency fluctuates.</li><li>Offline on GPU: a stable <strong>3–6 seconds</strong>.</li></ul>",
+          "<ul><li>Cloud: network transfer + queue + processing — latency fluctuates.</li><li>Offline on GPU: a stable <strong>2–5 seconds</strong>.</li></ul>",
       },
       {
         h2: "Internet dependency",
@@ -969,7 +969,7 @@ export const articlesEn: Article[] = [
       {
         h2: "Comparison",
         body:
-          "<table><thead><tr><th>Criterion</th><th>Offline</th><th>Cloud</th></tr></thead><tbody><tr><td>Audio leak</td><td>impossible</td><td>depends on the provider</td></tr><tr><td>Latency</td><td>3–6 s (GPU)</td><td>fluctuating</td></tr><tr><td>Internet</td><td>not needed</td><td>required</td></tr><tr><td>Cost</td><td>zero</td><td>per minute</td></tr><tr><td>PC requirements</td><td>some (GPU recommended)</td><td>minimal</td></tr></tbody></table>",
+          "<table><thead><tr><th>Criterion</th><th>Offline</th><th>Cloud</th></tr></thead><tbody><tr><td>Audio leak</td><td>impossible</td><td>depends on the provider</td></tr><tr><td>Latency</td><td>2–5 s (GPU)</td><td>fluctuating</td></tr><tr><td>Internet</td><td>not needed</td><td>required</td></tr><tr><td>Cost</td><td>zero</td><td>per minute</td></tr><tr><td>PC requirements</td><td>some (GPU recommended)</td><td>minimal</td></tr></tbody></table>",
       },
       {
         h2: "Conclusion",

@@ -17,7 +17,7 @@
 - **База знаний:** загрузка PDF-резюме, локальная индексация (pypdf), релевантный контекст для LLM.
 - **Ответы:** стриминг ответа LLM, single-flight приоритет вопроса.
 - **Приватность:** всё локально, кроме запроса к LLM. Режим «Невидимка» исключает окно из захвата экрана, стриминга и записи.
-- **Задержка:** ~3–6 секунд от конца вопроса до начала ответа на GPU (CUDA).
+- **Задержка:** ~2–5 секунд от конца вопроса до начала ответа на GPU (CUDA).
 - **Цена:** бесплатно, open source.
 - **Интерфейс:** вкладки Интервью / Резюме / Лог; тулбар со старт/стоп, мьют, таймером сессии и индикатором GPU/CPU.
 - **Фонетическая коррекция:** исправление технических терминов в живом черновике (например, «Zabix» → «Zabbix»).
@@ -56,7 +56,7 @@
 - **Что такое помощник на собеседовании?** Программа, которая распознаёт вопрос интервьюера и показывает ответ на экране; говорите вы сами. См. https://mocking.ru/articles/questions/
 - **Заметно ли работодателю, что используется помощник?** При обычном созвоне — нет, если включён режим Невидимка. При прокторинге использование может быть обнаружено и часто запрещено.
 - **Можно ли использовать помощника при прокторинге?** Как правило, нет: если правила запрещают сторонние инструменты, это нарушение. См. https://mocking.ru/articles/proctoring/
-- **Нужна ли видеокарта NVIDIA?** Нет, приложение работает на CPU, но GPU с CUDA значительно ускоряет распознавание (задержка ~3–6 с).
+- **Нужна ли видеокарта NVIDIA?** Нет, приложение работает на CPU, но GPU с CUDA значительно ускоряет распознавание (задержка ~2–5 с).
 - **Данные уходят в облако?** Только запрос к LLM. Распознавание речи, резюме и база знаний обрабатываются локально.
 - **Что такое «Режим Невидимка»?** Окно ассистента не попадает в шаринг экрана, стриминг и запись — подсказки видны только на вашем мониторе.
 - **Какие платформы поддерживаются?** Windows 10/11 и Linux.
@@ -84,7 +84,7 @@ PySide6, faster-whisper, Silero VAD, pypdf, single-flight LLM.
 - **Knowledge base:** PDF résumé upload, local indexing (pypdf), relevant context for the LLM.
 - **Answers:** streamed LLM answers, single-flight question priority.
 - **Privacy:** everything local except the LLM request. Invisible Mode excludes the window from screen capture, streaming and recording.
-- **Latency:** ~3–6 seconds from the end of the question to the start of the answer on GPU (CUDA).
+- **Latency:** ~2–5 seconds from the end of the question to the start of the answer on GPU (CUDA).
 - **Price:** free, open source.
 - **UI:** Interview / Résumé / Log tabs; toolbar with start/stop, mute, session timer and GPU/CPU indicator.
 - **Phonetic correction:** fixes technical terms in the live draft (e.g. "Zabix" → "Zabbix").
@@ -122,7 +122,7 @@ PySide6, faster-whisper, Silero VAD, pypdf, single-flight LLM.
 - **What is an interview assistant?** A program that recognizes the interviewer's question and shows an answer on screen; you do the talking. See https://mocking.ru/articles/en/questions/
 - **Can the employer tell an assistant is used?** On a regular call — no, if Invisible Mode is on. Under proctoring it can be detected and is often banned.
 - **Can I use an assistant under proctoring?** As a rule, no: if the rules ban third-party tools, it's a violation. See https://mocking.ru/articles/en/proctoring/
-- **Do I need an NVIDIA GPU?** No, the app runs on CPU, but a CUDA GPU speeds recognition up a lot (~3–6 s latency).
+- **Do I need an NVIDIA GPU?** No, the app runs on CPU, but a CUDA GPU speeds recognition up a lot (~2–5 s latency).
 - **Does data go to the cloud?** Only the LLM request. Speech recognition, résumé and knowledge base are processed locally.
 - **What is Invisible Mode?** The assistant window never gets into screen sharing, streaming or recording — hints are visible only on your monitor.
 - **Which platforms are supported?** Windows 10/11 and Linux.

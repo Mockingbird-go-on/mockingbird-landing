@@ -207,11 +207,19 @@
       <div class="hero">
       <div class="shot">
       <div class="hero__frame hero__frame--shot">
-        <img class="hero__img" src="/assets/img/screenshot.png" alt="Mockingbird app screenshot — AI interview assistant" width="1102" height="717">
+        <div class="hero__video">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/HmrVil9dH10?rel=0"
+            title="Mockingbird — demo"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
 
-        <span class="spot spot--stt"    data-spot="stt"><span class="spot__line"></span><span class="spot__label">Interviewer's question</span></span>
-        <span class="spot spot--llm"    data-spot="llm"><span class="spot__line spot__line--up"></span><span class="spot__label">AI answer</span></span>
-        <span class="spot spot--priv"   data-spot="priv"   title="Invisible"></span>
+        <span class="spot spot--stt"    data-spot="stt" hidden><span class="spot__line"></span><span class="spot__label">Interviewer's question</span></span>
+        <span class="spot spot--llm"    data-spot="llm" hidden><span class="spot__line spot__line--up"></span><span class="spot__label">AI answer</span></span>
+        <span class="spot spot--priv"   data-spot="priv" hidden  title="Invisible"></span>
       </div>
       </div>
       </div>

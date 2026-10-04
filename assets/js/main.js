@@ -101,6 +101,39 @@
     });
   });
 
+  /* ---------- YouTube fallback: если iframe не загрузился — показываем скриншот ---------- */
+  document.querySelectorAll(".hero__video").forEach((box) => {
+    const iframe = box.querySelector("iframe");
+    if (!iframe) return;
+    let loaded = false;
+    iframe.addEventListener("load", () => {
+      loaded = true;
+    });
+    /* если через N секунд load не пришёл — заменяем на скриншот */
+    const FALLBACK_MS = 4000;
+    setTimeout(() => {
+      if (loaded) return;
+      const img = document.createElement("img");
+      img.className = "hero__img";
+      img.src = "/assets/img/screenshot.png";
+      img.alt = "Mockingbird";
+      box.replaceChildren(img);
+      /* показываем spot-маркеры поверх скриншота */
+      box.parentElement
+        .querySelectorAll(".spot[hidden]")
+        .forEach((s) => s.removeAttribute("hidden"));
+    }, FALLBACK_MS);
+    /* iframe от youtube-nocookie не отвечает postMessage без API — пробуем всё же спросить */
+    try {
+      iframe.addEventListener("load", () => {
+        iframe.contentWindow?.postMessage(
+          JSON.stringify({ event: "listening", id: 1, channel: "widget" }),
+          "*"
+        );
+      });
+    } catch (e) {}
+  });
+
   render("stt", true);
 
   /* ---------- «губка наоборот»: замазано → открывается → «собесов» зачёркнуто ----------

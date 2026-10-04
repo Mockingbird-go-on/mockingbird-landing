@@ -5,31 +5,62 @@
   "use strict";
 
   const SCENES = {
-    stt: {
-      desc: "faster-whisper large-v3-turbo, adaptive VAD, фонетическая коррекция терминов",
-      question: "расскажи про настройку прометheus алертов",
-      live: "● слушать…",
-      answer: "Prometheus алерты настраиваются через rules-файлы: группы правил с выражениями <b>expr</b> и порогами <b>for</b>. Alertmanager дальше маршрутизирует срабатывания по severity и receiver'ам…",
+    ru: {
+      stt: {
+        desc: "faster-whisper large-v3-turbo, adaptive VAD, фонетическая коррекция терминов",
+        question: "расскажи про настройку прометheus алертов",
+        live: "● слушать…",
+        answer: "Prometheus алерты настраиваются через rules-файлы: группы правил с выражениями <b>expr</b> и порогами <b>for</b>. Alertmanager дальше маршрутизирует срабатывания по severity и receiver'ам…",
+      },
+      kb: {
+        desc: "PDF-резюме → база знаний; DevOps-топики как контекст для ответов",
+        question: "у тебя в резюме указан kubernetes — подробнее?",
+        live: "● резюме загружено · 12 блоков",
+        answer: "Судя по резюме, Kubernetes использовался для оркестрации микросервисов: helm-чарты, HPA по RPS, blue-green деплой через ArgoCD, сетевые политики Calico…",
+      },
+      llm: {
+        desc: "стрим ответа в реальном времени, single-flight приоритет вопроса",
+        question: "чем отличается ingress от service?",
+        live: "● llm streaming…",
+        answer: "Service — это абстракция, дающая стабильный адрес (ClusterIP) подгруппе подов. Ingress — слой L7 поверх: маршрутизация по HTTP-хосту и пути, TLS-терминация, всё через Ingress Controller…",
+      },
+      priv: {
+        desc: "Не видно при расшаривании экрана и стриминге",
+        question: "меня видно на демонстрации экрана?",
+        live: "● режим невидимка · скрыт",
+        answer: "Окно ассистента исключено из захвата: при шаринге экрана и стриминге его не видно ни в записи, ни у зрителей — подсказки остаются только на вашем мониторе.",
+      },
     },
-    kb: {
-      desc: "PDF-резюме → база знаний; DevOps-топики как контекст для ответов",
-      question: "у тебя в резюме указан kubernetes — подробнее?",
-      live: "● резюме загружено · 12 блоков",
-      answer: "Судя по резюме, Kubernetes использовался для оркестрации микросервисов: helm-чарты, HPA по RPS, blue-green деплой через ArgoCD, сетевые политики Calico…",
-    },
-    llm: {
-      desc: "стрим ответа в реальном времени, single-flight приоритет вопроса",
-      question: "чем отличается ingress от service?",
-      live: "● llm streaming…",
-      answer: "Service — это абстракция, дающая стабильный адрес (ClusterIP) подгруппе подов. Ingress — слой L7 поверх: маршрутизация по HTTP-хосту и пути, TLS-терминация, всё через Ingress Controller…",
-    },
-    priv: {
-      desc: "Не видно при расшаривании экрана и стриминге",
-      question: "меня видно на демонстрации экрана?",
-      live: "● режим невидимка · скрыт",
-      answer: "Окно ассистента исключено из захвата: при шаринге экрана и стриминге его не видно ни в записи, ни у зрителей — подсказки остаются только на вашем мониторе.",
+    en: {
+      stt: {
+        desc: "faster-whisper large-v3-turbo, adaptive VAD, phonetic term correction",
+        question: "tell me about setting up prometheus alerts",
+        live: "● listening…",
+        answer: "Prometheus alerts are configured via rules files: rule groups with <b>expr</b> expressions and <b>for</b> thresholds. Alertmanager then routes firings by severity and receivers…",
+      },
+      kb: {
+        desc: "PDF résumé → knowledge base; DevOps topics as context for answers",
+        question: "your résumé mentions kubernetes — tell me more?",
+        live: "● résumé loaded · 12 chunks",
+        answer: "Judging by the résumé, Kubernetes was used for microservice orchestration: helm charts, HPA by RPS, blue-green deploy via ArgoCD, Calico network policies…",
+      },
+      llm: {
+        desc: "real-time answer streaming, single-flight question priority",
+        question: "what's the difference between ingress and service?",
+        live: "● llm streaming…",
+        answer: "Service is an abstraction providing a stable address (ClusterIP) for a group of pods. Ingress is an L7 layer on top: routing by HTTP host and path, TLS termination, all through an Ingress Controller…",
+      },
+      priv: {
+        desc: "Hidden during screen sharing and streaming",
+        question: "am I visible during screen sharing?",
+        live: "● invisible mode · hidden",
+        answer: "The assistant window is excluded from capture: during screen sharing and streaming it is visible neither in recordings nor to viewers — hints stay only on your monitor.",
+      },
     },
   };
+
+  const SCENE_LANG = SCENES[document.documentElement.lang] ? document.documentElement.lang : "ru";
+  const SCENES_L = SCENES[SCENE_LANG];
 
   const TABS = document.querySelectorAll(".feature");
   const descMap = {
@@ -40,7 +71,7 @@
   };
 
   function   render(key, keepSpots) {
-    const data = SCENES[key];
+    const data = SCENES_L[key];
     if (!data) return;
 
     TABS.forEach((t) => {
